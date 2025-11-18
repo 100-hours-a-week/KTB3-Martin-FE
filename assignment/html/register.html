@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>회원가입 | 아무 말 대잔치</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/register.css">
+</head>
+<body>
+<header class="header">
+  <a href="login.html" class="back-btn" type="button">←</a>
+  <div class="header-title">아무 말 대잔치</div>
+</header>
+
+<main class="main">
+  <section class="signup-wrapper">
+    <h2 class="signup-title">회원가입</h2>
+
+    <!-- 프로필 사진 -->
+    <div class="profile-label-wrap">
+      <span>프로필 사진</span>
+      <span class="profile-helper">* helper text</span>
+    </div>
+    <div class="profile-upload">
+      <label for="profile" class="profile-placeholder">+</label>
+      <input id="profile" type="file" accept="image/*" hidden>
+    </div>
+
+    <!-- 폼 -->
+    <form>
+      <div class="form-group">
+        <label class="label">
+          <span class="required">*</span>이메일
+        </label>
+        <input type="email" class="input" placeholder="이메일을 입력하세요" required>
+        <div class="helper-text">* helper text</div>
+      </div>
+
+      <div class="form-group">
+        <label class="label">
+          <span class="required">*</span>비밀번호
+        </label>
+        <input type="password" class="input" placeholder="비밀번호를 입력하세요" required>
+        <div class="helper-text">* helper text</div>
+      </div>
+
+      <div class="form-group">
+        <label class="label">
+          <span class="required">*</span>비밀번호 확인
+        </label>
+        <input type="password" class="input" placeholder="비밀번호를 한 번 더 입력하세요" required>
+        <div class="helper-text">* helper text</div>
+      </div>
+
+      <div class="form-group">
+        <label class="label">
+          <span class="required">*</span>닉네임
+        </label>
+        <input type="text" class="input" placeholder="닉네임을 입력하세요" required>
+        <div class="helper-text">* helper text</div>
+      </div>
+
+      <button type="submit" class="btn-primary">회원가입</button>
+
+      <div class="login-link-wrap">
+        <a href="login.html">로그인하러 가기</a>
+      </div>
+    </form>
+  </section>
+</main>
+</body>
+</html>

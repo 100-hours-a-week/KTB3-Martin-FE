@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>게시글 상세 | 아무 말 대잔치</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./post-detail.css" />
+</head>
+<body>
+
+  <!-- 헤더 -->
+  <header class="appbar">
+    <button class="back-btn" onclick="history.back()">←</button>
+    <div class="appbar__title">아무 말 대잔치</div>
+    <div class="appbar__right">
+      <button class="avatar" id="avatar" style="background-image: url('/images/default-profile.png');"></button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="post">
+      <header class="post-header">
+        <h1 class="post-title">제목 1</h1>
+        <div class="post-meta">
+          <div class="author">
+            <div class="avatar-small" style="background-image: url('/images/default-profile.png');"></div>
+            <span class="author-name">더미 작성자 1</span>
+          </div>
+          <time class="post-time">2021-01-01 00:00:00</time>
+        </div>
+        <div class="post-actions">
+          <button class="btn-text">수정</button>
+          <button class="btn-text">삭제</button>
+        </div>
+      </header>
+
+      <div class="post-image">
+        <img src="/images/sample-post.png" alt="게시글 이미지">
+      </div>
+
+      <article class="post-content">
+        <p>
+          무엇을 하기로 할까요? 아무말이라면, 설문 문항 같은 모임이라고 생각합니다. 
+          우리는 매일 새로운 경험을 하며 살아갑니다. 
+          언뜻 아무말처럼 보이지만, 각자의 일상에는 이야기가 있습니다. 
+          이런 공간에서 서로의 생각을 공유하는 것도 재밌지 않을까요?
+        </p>
+      </article>
+
+      <div class="post-stats">
+        <div class="stat">👍 123 좋아요</div>
+        <div class="stat">👁️ 123 조회수</div>
+        <div class="stat">💬 123 댓글</div>
+      </div>
+
+      <section class="comment-section">
+        <textarea class="comment-input" placeholder="댓글을 남겨주세요"></textarea>
+        <button class="btn-comment">댓글 등록</button>
+      </section>
+
+      <ul class="comment-list">
+        <li class="comment">
+          <div class="comment-header">
+            <div class="avatar-small" style="background-image: url('/images/default-profile.png');"></div>
+            <div>
+              <span class="comment-author">더미 작성자 1</span>
+              <time class="comment-time">2021-01-01 00:00:00</time>
+            </div>
+          </div>
+          <p class="comment-body">댓글 내용</p>
+          <div class="comment-actions">
+            <button class="btn-text">수정</button>
+            <button class="btn-text">삭제</button>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+</body>
+</html>

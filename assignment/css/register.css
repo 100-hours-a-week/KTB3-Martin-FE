@@ -1,0 +1,230 @@
+:root {
+  --bg: #f4f5f7;
+  --border: #dcdcdc;
+  --text-main: #111111;
+  --text-sub: #777777;
+  --primary: #b48cff;
+  --radius: 10px;
+  --transition: 0.2s ease;
+  --header-height: 104px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+}
+
+/* ===== 헤더 ===== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 48px;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--bg);
+  z-index: 10;
+}
+
+.back-btn {
+  width: 56px;
+  height: 40px;
+  margin-right: 24px;
+  border-radius: 8px;
+  border: 2px solid #ff6b6b;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(-400%);
+  transition: var(--transition);
+}
+
+.back-btn:hover {
+  background-color: #ffecec;
+}
+
+.header-title {
+  font-size: clamp(20px, 2vw, 26px);
+  position:absolute;
+  font-weight: 700;
+  align-items: center;
+  justify-content: center;
+
+}
+
+/* ===== 메인 ===== */
+.main {
+  min-height: 100vh;
+  padding-top: var(--header-height);
+  display: flex;
+  justify-content: center;
+}
+
+.signup-wrapper {
+  width: 100%;
+  max-width: 480px;
+  margin-top: 80px;
+  padding: 32px 40px 40px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.signup-title {
+  margin: 0 0 32px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+
+
+}
+
+/* ===== 프로필 업로드 ===== */
+.profile-label-wrap {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.profile-helper {
+  display: block;
+  font-size: 11px;
+  color: var(--text-sub);
+  margin-top: 2px;
+}
+
+.profile-upload {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.profile-placeholder {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background-color: #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: #888;
+  cursor: pointer;
+  transition: var(--transition);
+  user-select: none;
+}
+
+.profile-placeholder:hover {
+  background-color: #d8d8d8;
+  transform: scale(1.02);
+}
+
+/* ===== 입력폼 ===== */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.label span.required {
+  color: #ff4d4f;
+  margin-right: 4px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  outline: none;
+  transition: var(--transition);
+  background-color: #ffffff;
+}
+
+.input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(180, 140, 255, 0.2);
+}
+
+.helper-text {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text-sub);
+}
+
+/* 에러 상태 */
+.form-group.error .input {
+  border-color: #ff4d4f;
+}
+
+.form-group.error .helper-text {
+  color: #ff4d4f;
+}
+
+/* ===== 버튼 ===== */
+.btn-primary {
+  width: 100%;
+  padding: 13px 0;
+  margin-top: 8px;
+  border: none;
+  border-radius: var(--radius);
+  background-color: var(--primary);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.16);
+}
+
+.login-link-wrap {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.login-link-wrap a {
+  color: #555555;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.login-link-wrap a:hover {
+  color: #222222;
+}
+
+/* ===== 반응형 ===== */
+@media (max-width: 600px) {
+  .header {
+    padding: 0 16px;
+  }
+
+  .signup-wrapper {
+    margin: 40px 16px 24px;
+    padding: 24px 20px 28px;
+  }
+}

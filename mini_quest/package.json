@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "express": "^5.1.0",
+    "readline-sync": "^1.4.10"
+  },
+  "name": "ktb3-martin-fe",
+  "version": "1.0.0",
+  "description": "프론트과제 저장소 입니다. 이곳에 html,css, js 관련 작업물이 올라갈 예정입니다",
+  "main": "minqeust1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/100-hours-a-week/KTB3-Martin-FE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/100-hours-a-week/KTB3-Martin-FE/issues"
+  },
+  "homepage": "https://github.com/100-hours-a-week/KTB3-Martin-FE#readme"
+}
