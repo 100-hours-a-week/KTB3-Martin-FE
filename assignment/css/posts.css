@@ -39,20 +39,76 @@ header.appbar{
   font-weight: 700;
   font-size: clamp(18px, 2.2vw, 28px);
 }
-.appbar__right{
-  justify-self: end;
-  padding-right: max(16px, (100vw - var(--container-max))/2);
+.appbar__right {
+  padding-right: max(16px, (100vw - var(--container-max)) / 2);
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   gap: 12px;
+  position: relative; /* ⭐ 드롭다운 기준점 */
 }
-.avatar{
-  width: 36px; height: 36px;
+.profile-menu {
+  position: absolute;
+  top: 55px;
+  right: 0;                /* 프로필 아이콘의 오른쪽에 붙게 */
+  transform: translateX(-50%); /* 프로필 기준으로 중앙 오게 */
+  width: 160px;
+  padding: 10px 0;
+  background: #e6e6e6;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 999;
+}
+
+.avatar-img {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: #ede9fe;
-  display: grid; place-items: center;
-  font-size: 18px;
+  object-fit: cover;
 }
+
+/* 프로필 이미지 */
+.avatar-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+/* 드롭다운 컨테이너 */
+.profile-menu {
+  position: absolute;
+  top: 55px;          /* 프로필 아래에 배치 */
+  right: 10px;
+  width: 160px;
+  padding: 10px 0;
+  background: #e6e6e6;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 999;
+}
+
+/* 숨김 클래스 */
+.hidden {
+  display: none;
+}
+
+/* 항목 */
+.menu-item {
+  padding: 12px 20px;
+  text-align: center;
+  font-size: 15px;
+  cursor: pointer;
+  color: #333;
+}
+
+/* hover 효과 */
+.menu-item:hover {
+  background-color: #d3d3d3;
+}
+
+
 
 /* ===== 본문 ===== */
 .container{
@@ -64,6 +120,7 @@ main{
   padding-top: calc(var(--header-height) + 32px);
   padding-bottom: 64px;
 }
+
 
 /* ===== 인트로 ===== */
 .intro{
@@ -106,9 +163,7 @@ main{
   border: 1px solid var(--border);
   padding: 18px 20px;
 }
-.card--highlight{
-  outline: 2px solid #f87171;
-}
+
 .meta{
   display: flex;
   align-items: center;
@@ -140,10 +195,13 @@ main{
   color: var(--muted);
   font-size: 14px;
 }
-.author .dot{
-  width: 28px; height: 28px; border-radius: 50%;
-  background: #e5e7eb;
+.author-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
 }
+
 .time{
   color: var(--muted);
   font-size: 12px;

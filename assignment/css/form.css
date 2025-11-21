@@ -2,21 +2,32 @@
   --header-height: 104px;
   --container-max: 640px;
   --radius: 10px;
+
   --bg: #f4f5f7;
   --surface: #ffffff;
   --border: #e5e7eb;
   --text: #1f2937;
   --muted: #6b7280;
+  --text-sub: #9ca3af;
+
   --primary: #7d8aff;
   --primary-contrast: #ffffff;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
+
 html, body {
   margin: 0;
   font-family: "Noto Sans KR", sans-serif;
   background: var(--bg);
   color: var(--text);
+}
+
+/* 숨김 처리 */
+.hidden {
+  display: none !important;
 }
 
 /* ===== 헤더 ===== */
@@ -31,25 +42,59 @@ html, body {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
 }
+
 .appbar__title {
   font-size: 22px;
   font-weight: 700;
   text-align: center;
   flex: 1;
+  cursor:pointer;
 }
+
 .back-btn {
   font-size: 24px;
   border: none;
   background: none;
   cursor: pointer;
 }
-.avatar {
-  width: 36px; height: 36px;
+
+/* 프로필 이미지 통일 */
+.avatar-img {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: #ede9fe;
-  display: grid;
-  place-items: center;
-  font-size: 18px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+/* 프로필 드롭다운 메뉴 */
+.profile-menu {
+  position: absolute;
+  top: 64px;
+  right: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px 0;
+  width: 150px;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.profile-menu.visible {
+  display: flex;
+}
+
+.menu-item {
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.menu-item:hover {
+  background: #f3f4f6;
 }
 
 /* ===== 본문 ===== */
@@ -82,6 +127,7 @@ html, body {
 label {
   font-weight: 600;
 }
+
 .required {
   color: #ef4444;
   margin-left: 4px;
@@ -109,11 +155,32 @@ textarea {
   min-height: 180px;
 }
 
+/* helper-text */
 .helper-text {
   font-size: 12px;
+  color: #ef4444;
+  margin-top: 4px;
+  height: 14px;
+}
+
+/* 파일 input 커스텀 */
+input[type="file"] {
+  padding: 8px 12px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
   color: var(--muted);
 }
 
+/* 파일 설명 텍스트 */
+.file-text {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+/* 버튼 영역 */
 .form-actions {
   display: flex;
   justify-content: center;
@@ -128,10 +195,23 @@ textarea {
   cursor: pointer;
   transition: 0.2s;
 }
+
 .btn-primary {
   background: var(--primary);
   color: var(--primary-contrast);
 }
+
 .btn-primary:hover {
   filter: brightness(1.05);
 }
+
+.btn-primary.disabled {
+  background: #c7c9d9;  /* 연한 회색 */
+  cursor: default;
+}
+
+.btn-primary.active {
+  background: var(--primary); /* 기존 보라색 */
+  cursor: pointer;
+}
+

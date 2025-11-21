@@ -15,7 +15,12 @@
 
 body {
   margin: 0;
-  font-family: "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    "Noto Sans KR",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   background-color: var(--bg);
   color: var(--text-main);
 }
@@ -58,11 +63,10 @@ body {
 
 .header-title {
   font-size: clamp(20px, 2vw, 26px);
-  position:absolute;
+  position: absolute;
   font-weight: 700;
   align-items: center;
   justify-content: center;
-
 }
 
 /* ===== 메인 ===== */
@@ -88,8 +92,6 @@ body {
   text-align: center;
   font-size: 24px;
   font-weight: 700;
-
-
 }
 
 /* ===== 프로필 업로드 ===== */
@@ -125,6 +127,8 @@ body {
   cursor: pointer;
   transition: var(--transition);
   user-select: none;
+  overflow: hidden;
+  position: relative;
 }
 
 .profile-placeholder:hover {
@@ -132,6 +136,22 @@ body {
   transform: scale(1.02);
 }
 
+.profile-plus {
+  font-size: 40px;
+  color: #888;
+  position: absolute; /* ⭐ 이미지 위에 떠있게 */
+}
+
+#profilePreview {
+  position: absolute; /* ⭐ 원형 전체를 덮도록 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* ⭐ 이미지 꽉 차게 */
+  display : none;
+  z-index: 1;
+}
 /* ===== 입력폼 ===== */
 .form-group {
   margin-bottom: 18px;

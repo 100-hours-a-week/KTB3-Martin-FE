@@ -1,214 +1,440 @@
 :root {
+  --header-height: 80px;
+  --container-max: 960px;
   --bg: #f4f5f7;
-  --surface: #fff;
-  --border: #dcdfe4;
-  --text: #1f2227;
-  --muted: #888;
+  --surface: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --radius: 12px;
+  --shadow: 0 2px 8px rgba(0,0,0,.06);
   --primary: #7d8aff;
-  --radius: 10px;
-  --shadow: 0 2px 6px rgba(0,0,0,0.05);
+  --primary-contrast: #ffffff;
 }
 
-* { box-sizing: border-box; }
-body {
+html, body {
   margin: 0;
+  padding: 0;
   background: var(--bg);
-  color: var(--text);
   font-family: "Noto Sans KR", sans-serif;
+  color: var(--text);
 }
 
-/* 헤더 */
-.appbar {
-  display: flex;
+/* ======================= 헤더 ======================= */
+
+header.appbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-height);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
-  height: 64px;
-  padding: 0 20px;
-  background: var(--surface);
+  background: #fff;
   border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
+  z-index: 1000;
 }
+
 .back-btn {
   font-size: 20px;
+  cursor: pointer;
   background: none;
+  border: none;
+  padding-left: max(16px, (100vw - var(--container-max)) / 2);
+  color: var(--text);
+}
+
+.appbar__title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  cursor : pointer;
+
+}
+
+.appbar__right {
+  padding-right: max(16px, (100vw - var(--container-max)) / 2);
+  display: flex;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  position: relative; /* ⭐ 드롭다운 기준점 */
+}
+.profile-menu {
+  position: absolute;
+  top: 55px;
+  left: 50%;
+  width: 160px;
+  background: #e6e6e6;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  padding: 10px 0;
+  z-index: 999;
+}
+
+/* 프로필(오른쪽 위) */
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
   border: none;
   cursor: pointer;
 }
-.appbar__title {
-  font-size: 18px;
-  font-weight: 700;
-}
-.avatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 2px solid var(--border);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
 
-/* 컨테이너 */
-.container {
-  max-width: 700px;
+/* ======================= 메인 컨테이너 ======================= */
+
+.detail-container {
+  width: min(100%, var(--container-max));
   margin: 0 auto;
-  padding: 24px;
+  padding: calc(var(--header-height) + 20px) 16px 60px;
 }
 
-/* 게시글 헤더 */
+/* ======================= 게시글 헤더(제목/작성자) ======================= */
+
 .post-header {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  margin-bottom: 28px;
+  padding-bottom: 18px;
   border-bottom: 1px solid var(--border);
-  padding-bottom: 12px;
+  position : relative;
 }
+
 .post-title {
-  margin: 0;
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 700;
+  margin: 0 0 10px;
 }
-.post-meta {
+
+.post-info {
   display: flex;
   align-items: center;
   gap: 10px;
-}
-.author {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.avatar-small {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-.author-name {
-  font-weight: 500;
-}
-.post-time {
-  font-size: 13px;
   color: var(--muted);
-}
-.post-actions {
-  margin-top: 4px;
-}
-.btn-text {
-  background: none;
-  border: none;
-  color: var(--primary);
   font-size: 14px;
+}
+
+.author-img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.post-actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  display: flex;
+  gap: 8px; 
+}
+
+.post-actions button {
+  background: none;
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 6px;
   cursor: pointer;
-  margin-right: 6px;
-}
-.btn-text:hover {
-  text-decoration: underline;
+  color: var(--text);
 }
 
-/* 이미지 */
-.post-image img {
+.post-actions button:hover {
+  background: #f1f1f1;
+}
+
+
+/* ======================= 게시글 이미지 ======================= */
+
+.post-image {
   width: 100%;
-  margin: 16px 0;
+  max-height: 420px;
+  background: #e5e5e5;
+  object-fit: cover;
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  background: #eee;
+  margin: 20px 0;
 }
 
-/* 본문 */
+/* ======================= 본문 내용 ======================= */
+
 .post-content {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.7;
-  margin-bottom: 24px;
+  white-space: pre-line;
+  margin-bottom: 30px;
 }
 
-/* 통계 */
+/* ======================= 좋아요/조회수/댓글 박스 ======================= */
+
 .post-stats {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  margin: 20px 0;
-}
-.stat {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 10px 18px;
-  font-size: 14px;
-  box-shadow: var(--shadow);
+  gap: 22px;
+  margin: 36px 0;
 }
 
-/* 댓글 */
-.comment-section {
+.stat-box {
+  width: 140px;
+  padding: 14px 0;
+  background: #f3f4f6;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 24px;
+  align-items: center;
 }
+/* 오직 첫 번째 stat-box(좋아요 박스)만 버튼처럼 */
+.post-stats .stat-box:nth-child(1) {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* 좋아요 활성 상태 */
+.post-stats .stat-box:nth-child(1).liked {
+  background: #ACA0EB;
+  color: white;
+}
+
+.post-stats .stat-box:nth-child(1).liked .stat-label {
+  color: white;
+}
+
+/* 좋아요 박스 hover 효과 */
+.post-stats .stat-box:nth-child(1):hover {
+  filter: brightness(0.97);
+}
+
+
+.stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ======================= 댓글 입력 ======================= */
+
 .comment-input {
   width: 100%;
   min-height: 90px;
-  padding: 10px;
-  font-size: 14px;
+  background: #fff;
+  border-radius: var(--radius);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  padding: 12px;
   resize: vertical;
-  outline: none;
-}
-.comment-input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px #e9ebff;
-}
-.btn-comment {
-  align-self: flex-end;
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius);
-  padding: 10px 18px;
-  cursor: pointer;
-  font-weight: 600;
-}
-.btn-comment:hover {
-  background: #6c77e6;
+  font-size: 14px;
 }
 
-/* 댓글 리스트 */
+.comment-submit {
+  margin-top: 10px;
+  background: var(--primary);
+  border: none;
+  padding: 10px 16px;
+  color: var(--primary-contrast);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.comment-submit.disabled {
+  background: #7F6AEE; /* 연한 보라 */
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.comment-submit.enabled {
+  background: #ACA0EB; /* 진한 보라 */
+  cursor: pointer;
+  opacity: 1;
+}
+
+.comment-submit:hover {
+  filter: brightness(1.05);
+}
+
+/* ======================= 댓글 리스트 ======================= */
+
 .comment-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
-.comment {
-  background: var(--surface);
-  border: 1px solid var(--border);
+
+.comment-item {
+  position: relative;
+  background: #fff;
+  padding: 18px;
   border-radius: var(--radius);
-  padding: 12px;
-  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
 }
-.comment-header {
+
+.comment-author {
   display: flex;
   align-items: center;
-  gap: 8px;
-}
-.comment-author {
-  font-weight: 600;
-}
-.comment-time {
-  display: block;
-  font-size: 12px;
+  gap: 10px;
+  font-size: 14px;
   color: var(--muted);
 }
+
+.comment-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .comment-body {
-  margin: 8px 0;
-  font-size: 14px;
+  margin: 12px 0;
+  font-size: 15px;
 }
+
 .comment-actions {
-  display: flex;
-  gap: 6px;
+  position:absolute;
+  top: 16px;
+  right: 16px;
+  
 }
+
+.comment-actions button {
+  background: none;
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.comment-actions button:hover {
+  background: #f1f1f1;
+}
+
+/* ======================= 반응형 ======================= */
+
+@media (max-width: 520px) {
+  .post-stats {
+    flex-direction: column;
+    gap: 14px;
+  }
+  .stat-box {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+.appbar__right {
+  padding-right: max(16px, (100vw - var(--container-max)) / 2);
+  display: flex;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  position: relative; /* ⭐ 드롭다운 기준점 */
+}
+.profile-menu {
+  position: absolute;
+  top: 55px;
+  right: 0;
+  width: 160px;
+  background: #e6e6e6;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  padding: 10px 0;
+  z-index: 999;
+}
+
+.avatar-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+
+.hidden { display: none; }
+
+.menu-item {
+  padding: 12px 20px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+}
+.menu-item:hover {
+  background: #d4d4d4;
+}
+
+/* =======================
+      삭제 모달
+======================= */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  width: 340px;
+  padding: 28px 24px;
+  background: #fff;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.modal-desc {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 24px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-btn {
+  width: 48%;
+  padding: 12px 0;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+}
+
+.modal-btn.cancel {
+  background: #111;
+  color: #fff;
+}
+
+.modal-btn.confirm {
+  background: #c7b7ff;
+  color: #fff;
+}
+
+
+

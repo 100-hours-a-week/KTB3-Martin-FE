@@ -4,13 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>비밀번호 수정</title>
-  <link rel="stylesheet" href="edit-passwd.css" />
+  <link rel="stylesheet" href="../css/edit-passwd.css" />
 </head>
 <body>
-  <header class="header">
-    <h1 class="title">아무 말 대잔치</h1>
-    <div class="profile">
-      <img src="/images/default-profile.png" alt="profile" />
+
+  <!-- 헤더 -->
+  <header class="appbar">
+    <button class="back-btn" onclick="history.back()">←</button>
+
+    <div class="appbar__title">아무 말 대잔치</div>
+
+    <div class="appbar__right">
+      <img id="nav-profile" class="avatar-img" src="../images/default-profile.jpg" alt="프로필" />
+
+      <!-- 드롭다운 -->
+      <div id="profile-menu" class="profile-menu hidden">
+        <div class="menu-item" id="menu-edit">회원정보수정</div>
+        <div class="menu-item" id="menu-password">비밀번호수정</div>
+        <div class="menu-item" id="menu-logout" onclick="logout()">로그아웃</div>
+      </div>
     </div>
   </header>
 
@@ -21,13 +33,13 @@
       <div class="input-group">
         <label for="password">비밀번호</label>
         <input type="password" id="password" placeholder="비밀번호를 입력하세요" />
-        <p class="helper-text">* helper text</p>
+        <p class="helper-text"></p>
       </div>
 
       <div class="input-group">
         <label for="password-check">비밀번호 확인</label>
         <input type="password" id="password-check" placeholder="비밀번호를 한번 더 입력하세요" />
-        <p class="helper-text">* helper text</p>
+        <p class="helper-text"></p>
       </div>
 
       <div class="btn-area">
@@ -35,5 +47,7 @@
       </div>
     </form>
   </main>
+
+  <script src="../js/edit-password.js"></script>
 </body>
 </html>

@@ -1,116 +1,200 @@
-/* ===== 전체 ===== */
+/* ============================
+   Reset & 기본 설정
+============================ */
 body {
   margin: 0;
   padding: 0;
+  background: #f3f4f6;
   font-family: "Noto Sans KR", sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-/* ===== 헤더 ===== */
-.header {
+/* ============================
+   헤더(Appbar)
+============================ */
+.appbar {
   width: 100%;
-  height: 80px;
-  background-color: #f4f4f4;
+  height: 64px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #ccc;
+  justify-content: center;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
   position: relative;
 }
 
-.header .title {
-  font-size: 24px;
-  font-weight: 600;
-}
-
-.header .profile {
+.back-btn {
   position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
+  left: 20px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
 }
 
-.header .profile img {
-  width: 40px;
-  height: 40px;
+.appbar__title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.appbar__right {
+  position: absolute;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatar-img {
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 1px solid #e5e7eb;
 }
 
-/* ===== 메인 ===== */
+/* 드롭다운 */
+.profile-menu {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  width: 150px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.profile-menu.hidden {
+  display: none;
+}
+
+.menu-item {
+  padding: 12px 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: #f3f4f6;
+}
+
+/* ============================
+   메인
+============================ */
 .main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 120px;
+  padding-top: 52px;
 }
 
 .page-title {
   font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 40px;
+  font-weight: 700;
+  margin-bottom: 32px;
 }
 
-/* ===== 폼 영역 ===== */
+/* ============================
+   비밀번호 폼
+============================ */
 .password-form {
-  background-color: white;
-  padding: 40px 50px;
-  border-radius: 10px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
   width: 380px;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  background: #ffffff;
+  padding: 32px 28px;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* 입력 그룹 */
 .input-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .input-group label {
   font-size: 14px;
   font-weight: 600;
-  margin-bottom: 5px;
+  display: block;
+  margin-bottom: 6px;
 }
 
 .input-group input {
-  height: 40px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 0 10px;
+  width: 100%;
+  height: 42px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0 12px;
   font-size: 14px;
+  box-sizing: border-box;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #bba3ff;
+  box-shadow: 0 0 0 2px rgba(187, 163, 255, 0.25);
 }
 
 .helper-text {
   font-size: 12px;
-  color: #d9534f;
-  margin-top: 5px;
+  color: #ef4444;
+  margin-top: 4px;
+  height: 14px;
 }
 
-/* ===== 버튼 ===== */
+/* ============================
+   버튼
+============================ */
 .btn-area {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  margin-top: 16px;
 }
 
 .submit-btn {
   width: 100%;
-  height: 40px;
+  height: 44px;
+  background: #ACA0EB; /* 비활성화 기본색 */
   border: none;
-  border-radius: 6px;
-  background-color: #c2b3f9;
-  color: white;
+  color: #fff;
+  font-size: 15px;
   font-weight: 600;
+  border-radius: 8px;
   cursor: pointer;
+  transition: 0.2s;
 }
 
-.submit-btn:hover {
-  background-color: #a694f9;
+.submit-btn.enabled {
+  background: #7F6AEE;  /* 활성화 색상 */
+}
+
+.submit-btn:hover.enabled {
+  background: #6A56E6;
+}
+/* ===============================
+   토스트 메시지
+=============================== */
+.toast-msg {
+  position: fixed;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ACA0EB;
+  padding: 12px 20px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity .3s;
+  z-index: 9999;
+}
+.toast-msg.show {
+  opacity: 1;
+}
+
+
+/* 반응형 */
+@media (max-width: 480px) {
+  .password-form {
+    width: 90%;
+    padding: 28px 20px;
+  }
 }

@@ -1,0 +1,250 @@
+// =====================================================
+//                🔵 전역 변수
+// =====================================================
+let postId = null; // 수정 모드 여부 판단용
+let currentUser = null;
+
+// =====================================================
+//                🔵 DOM 요소
+// =====================================================
+const imageInput = document.getElementById("image");
+const fileText   = document.querySelector(".file-text");
+const titleInput = document.getElementById("title");
+const contentInput = document.getElementById("content");
+const submitBtn  = document.getElementById("btn-write");
+
+// =====================================================
+//                🔵 초기 설정
+// =====================================================
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelector(".appbar__title").addEventListener("click", () => {
+        window.location.href = "/html/posts.html"
+    });
+
+
+  // URL 파라미터에서 postId 확인 → 수정 모드인지 판단
+  const urlParams = new URLSearchParams(window.location.search);
+  postId = urlParams.get("postId");
+
+  // 세션 체크 및 현재 사용자 정보 불러오기
+  checkSession();
+  loadCurrentUser();
+
+  // 수정 모드일 경우 기존 내용 불러오기
+  if (postId) loadPostData(postId);
+
+  const profileImg  = document.querySelector("#nav-profile");
+  const profileMenu = document.querySelector("#profile-menu");
+
+  // 프로필 클릭 → 메뉴 열기/닫기
+  profileImg.addEventListener("click", (e) => {
+    e.stopPropagation();
+    profileMenu.classList.toggle("hidden");
+  });
+
+  // 화면 클릭 → 메뉴 닫기
+  document.addEventListener("click", (e) => {
+    if (!profileImg.contains(e.target) && !profileMenu.contains(e.target)) {
+      profileMenu.classList.add("hidden");
+    }
+  });
+
+  // 메뉴 이동 기능 (선택사항)
+  document.querySelector("#menu-edit")?.addEventListener("click", () => {
+    window.location.href = "/html/edit-profile.html";
+  });
+
+  document.querySelector("#menu-password")?.addEventListener("click", () => {
+    window.location.href = "/html/edit-password.html";
+  });
+
+  document.querySelector("#menu-logout")?.addEventListener("click", async () => {
+    await fetch("http://localhost:8080/api/user/session", {
+        method: "delete",
+        credentials: "include"
+    });
+    window.location.href = "index.html";
+  });
+
+});
+
+titleInput.addEventListener("input", updateSubmitButton);
+contentInput.addEventListener("input", updateSubmitButton);
+
+
+
+
+
+
+// =====================================================
+//        🔵 게시글 기존 데이터 불러오기 (수정 모드)
+// =====================================================
+async function loadPostData(id) {
+  try {
+    const res = await fetch(`http://localhost:8080/api/posts/${id}`, {
+      credentials: "include",
+    });
+
+    const json = await res.json();
+    const post = json.data.post;
+
+    titleInput.value = post.title;
+    contentInput.value = post.content;
+
+    // 기존 이미지가 있다면 안내 문구 출력
+    if (post.image && post.image.length > 0) {
+      fileText.textContent = `${post.image}`;
+    }
+    updateSubmitButton();
+  } catch (e) {
+    console.error("게시글 로딩 실패:", e);
+  }
+}
+
+
+// =====================================================
+//        🔵 게시글 작성 또는 수정 요청 처리
+// =====================================================
+submitBtn.addEventListener("click", async () => {
+
+  const title   = titleInput.value.trim();
+  console.log(title);
+  const content = contentInput.value.trim();
+  console.log(content);
+  const imageInput = document.getElementById("image");
+  const imageFile = imageInput.files[0];
+
+
+  if (!title || !content) {
+    const helpertext = document.querySelector(".helper-text");
+    helpertext.textContent = "제목과 내용을 입력하세요";
+    return;
+  }
+  let imageurl = "";
+
+  if(imageFile){
+    const fd = new FormData();
+    fd.append("image", imageFile);
+
+    const res = await fetch("http://localhost:8080/api/user/profile", {
+      method: "POST",
+      credentials: "include",
+      body: fd,
+    });
+    const data = await res.json();
+
+    if(!res.ok){
+        alert("이미지 업로드 실패");
+        return;
+    }
+
+    imageurl = data.url;
+
+    
+  }
+
+  const payload = {
+    title,
+    content,
+    image: imageurl,
+  };
+
+  console.log(imageurl);
+  
+
+  try {
+    let url = "http://localhost:8080/api/posts";
+    let method = "POST";
+
+    // ✦ 수정 모드일 경우 PUT 호출
+    if (postId) {
+      url = `http://localhost:8080/api/posts/${postId}`;
+      method = "PUT";
+    }
+
+    const res = await fetch(url, {
+      method,
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const json = await res.json();
+
+    if (res.ok) {
+      alert(postId ? "게시글이 수정되었습니다." : "게시글이 등록되었습니다.");
+      window.location.href = `/html/post-detail.html?postId=${json.data.id}`;
+    } else {
+      alert(json.message || "오류가 발생했습니다.");
+    }
+
+  } catch (e) {
+    console.error(e);
+    alert("네트워크 오류가 발생했습니다.");
+  }
+});
+
+
+// =====================================================
+//                🔵 세션 체크
+// =====================================================
+async function checkSession() {
+  try {
+    const res = await fetch("http://localhost:8080/api/user", {
+      credentials: "include",
+    });
+
+    if (res.status === 401 || res.status === 403) {
+      alert("로그인이 필요합니다.");
+      window.location.href = "index.html";
+    }
+
+  } catch (err) {
+    console.error("checkSession error:", err);
+    window.location.href = "index.html";
+  }
+}
+
+
+// =====================================================
+//                🔵 현재 사용자 정보 불러오기
+// =====================================================
+async function loadCurrentUser() {
+  try {
+    const res = await fetch("http://localhost:8080/api/user", {
+      credentials: "include",
+    });
+
+    if (!res.ok) return;
+
+    const result = await res.json();
+    currentUser = result.data;
+
+    const profileImg = document.querySelector("#nav-profile");
+    const baseURL = "http://localhost:8080";
+
+    if (currentUser.imageurl) {
+      profileImg.src = baseURL + currentUser.imageurl;
+    } else {
+      profileImg.src = "../images/default-profile.jpg";
+    }
+  } catch (err) {
+    console.log("사용자 정보 로드 실패:", err);
+  }
+}
+
+function updateSubmitButton() {
+  const title = titleInput.value.trim();
+  const content = contentInput.value.trim();
+
+  if (title && content) {
+    submitBtn.classList.remove("disabled");
+    submitBtn.classList.add("active");
+  } else {
+    submitBtn.classList.add("disabled");
+    submitBtn.classList.remove("active");
+  }
+}
+

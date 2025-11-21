@@ -4,50 +4,82 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>회원정보수정 | 아무 말 대잔치</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href = "edit-pofile.css">
+  <link rel="stylesheet" href="../css/edit-pofile.css">
 </head>
 
 <body>
+
   <!-- 헤더 -->
   <header class="appbar">
     <div></div>
+
     <div class="appbar__title">아무 말 대잔치</div>
+
     <div class="appbar__right">
       <button class="avatar" id="avatar"
-          style="background-image: url('../image/default-profile.jpg');"></button>
+        style="background-image: url('../images/default-profile.jpg');">
+      </button>
+
       <div class="dropdown" id="dropdownMenu">
-        <button onclick="location.href='/profile-edit.html'">회원정보수정</button>
-        <button onclick="location.href='/change-password.html'">비밀번호수정</button>
+        <button onclick="location.href='edit-profile.html'">회원정보수정</button>
+        <button onclick="location.href='edit-passwd.html'">비밀번호수정</button>
         <button onclick="logout()">로그아웃</button>
       </div>
     </div>
   </header>
 
+  <!-- 메인 -->
   <main class="container">
+
     <h2>회원정보수정</h2>
 
+    <!-- 프로필 이미지 -->
+    <div class="profile-label">프로필 사진*</div>
     <div class="profile-photo">
-      <img id="profileImage" src="../image/default-profile.jpg" alt="프로필 사진">
+      <img id="profileImage" src="../images/default-profile.jpg" alt="프로필 사진">
       <button type="button" id="btnChangePhoto">변경</button>
-      <input type="file" id="photoInput" accept="image/*" style="display:none;" />
+      <input type="file" id="photoInput" accept="image/*" style="display:none;">
     </div>
 
+    <!-- 이메일 -->
     <div class="form-group">
       <label for="email">이메일</label>
-      <input id="email" name="email" type="email" value="startupcode@gmail.com" readonly />
+      <input id="email" type="email" value="startupcode@gmail.com" readonly>
     </div>
 
+    <!-- 닉네임 -->
     <div class="form-group">
       <label for="nickname">닉네임</label>
-      <input id="nickname" name="nickname" type="text" placeholder="닉네임을 입력하세요" value="스타트업코드" />
+      <input id="nickname" type="text" placeholder="닉네임을 입력하세요" value="스타트업코드">
+      <p class="helper">*helper text</p>
     </div>
 
-    <button class="btn-primary" id="btnUpdate">수정하기</button>
-    <button class="btn-secondary" id="btnDelete">회원 탈퇴</button>
-    <button class="btn-final" id="btnFinish">수정완료</button>
+    <!-- 버튼 -->
+    <button class="btn" id="btnUpdate">수정하기</button>
+    <button class="btn" id="btnDelete">회원 탈퇴</button>
+
   </main>
 
+  <script src="../js/edit-profile.js"></script>
+<!-- 회원탈퇴 모달 -->
+<div id="deleteModal" class="delete-modal hidden">
+  <div class="delete-modal__backdrop"></div>
+
+  <div class="delete-modal__content">
+    <h2 class="delete-modal__title">회원탈퇴 하시겠습니까?</h2>
+
+    <p class="delete-modal__text">
+      작성된 게시글과 댓글은 삭제됩니다.
+    </p>
+
+    <div class="delete-modal__buttons">
+      <button id="modalCancelDelete" class="modal-btn cancel">취소</button>
+      <button id="modalConfirmDelete" class="modal-btn confirm">확인</button>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
