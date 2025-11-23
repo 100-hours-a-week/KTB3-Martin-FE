@@ -1,0 +1,38 @@
+.profile-menu {
+  position: absolute;
+  top: 60px;
+  right: 16px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  width: 150px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+.hidden {
+  display: none;
+}
+
+.menu-item {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #e9ebff;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* 랜덤 별 생성: box-shadow 여러 개로 랜덤 위치의 별을 배치하는 방식 */
+@keyframes driftDiag {
+  0% {
+    transform: translate(-200px, -200px);
+  }
+  100% {
+    transform: translate(200px, 200px);
+  }
+}

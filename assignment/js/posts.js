@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileImg = document.querySelector("#nav-profile");
   const profileMenu = document.querySelector("#profile-menu");
 
+
   // 프로필 클릭 → 메뉴 toggle
   profileImg.addEventListener("click", () => {
     profileMenu.classList.toggle("hidden");
@@ -37,6 +38,11 @@ document.querySelector("#menu-logout").addEventListener("click", async () => {
 document.querySelector("#btn-write").addEventListener("click", () => {
   window.location.href = "/html/form.html";
 });
+
+document.querySelector("#menu-home").addEventListener("click", () => {
+  window.location.href = "posts.html";
+});
+
 
 
 
@@ -129,7 +135,6 @@ async function loadCurrentUser() {
 
   const result = await res.json();
   const user = result.data;
-  console.log(user.imageurl);
 
   const profileImg = document.querySelector("#nav-profile");
   profileImg.src = `http://localhost:8080${user.imageurl}`|| "../images/default-profile.jpg";

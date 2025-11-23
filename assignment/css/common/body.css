@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+  font-family: "Noto Sans KR", sans-serif;
+  background: linear-gradient(180deg, #0b0d22, #11204b, #1d2f55);
+  color: #e9e9ff;
+  overflow-x: hidden;
+}
+
+/* 은은한 작은 별 패턴 */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+
+
+
+
+
+

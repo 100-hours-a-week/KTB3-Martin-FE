@@ -1,0 +1,84 @@
+@keyframes driftDiag {
+  0% {
+    transform: translate(-200px, -200px);
+  }
+  100% {
+    transform: translate(200px, 200px);
+  }
+}
+
+.stars, .stars2, .stars3 {
+  position: fixed;
+  top: 0; left: 0;
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 1층 – 가장 작은 별 */
+.stars {
+  box-shadow:
+    50px 90px #fff,
+    120px 300px #fff,
+    200px 50px #fff,
+    350px 400px #fff,
+    500px 200px #fff,
+    700px 500px #fff,
+    900px 150px #fff,
+    1100px 350px #fff,
+    1300px 250px #fff,
+    1500px 100px #fff,
+    1700px 450px #fff,
+    1900px 50px #fff;
+  opacity: 0.6;
+  animation: driftDiag 140s linear infinite;
+}
+
+/* 2층 – 중간 크기, 별 더 느리고 희미함 */
+.stars2 {
+  width: 3px;
+  height: 3px;
+  box-shadow:
+    80px 200px #fff8,
+    200px 400px #fff8,
+    330px 150px #fff8,
+    600px 500px #fff8,
+    900px 300px #fff8,
+    1200px 100px #fff8,
+    1500px 450px #fff8,
+    1800px 200px #fff8;
+  opacity: 0.4;
+  animation: driftDiag 180s linear infinite;
+}
+
+/* 3층 – 가장 희미한 큰 별 */
+.stars3 {
+  width: 5px;
+  height: 5px;
+  box-shadow:
+    100px 300px #fff4,
+    400px 100px #fff4,
+    800px 450px #fff4,
+    1200px 350px #fff4,
+    1600px 100px #fff4,
+    1900px 400px #fff4;
+  opacity: 0.25;
+  animation: driftDiag 220s linear infinite;
+}
+
+.stars {       /* 작은 별 */
+  border-radius: 50%;
+  filter: blur(0.3px);
+}
+
+.stars2 {      /* 중간 별 */
+  border-radius: 50%;
+  filter: blur(0.5px);
+}
+
+.stars3 {      /* 큰 별 */
+  border-radius: 50%;
+  filter: blur(0.7px);
+}

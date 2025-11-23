@@ -1,0 +1,35 @@
+header.appbar {
+
+  height: 60px;
+  margin-left: 20px;
+  margin-top: 4px;
+  background: rgba(255, 255, 255, 0);
+  border-bottom: none;
+  backdrop-filter: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+
+  color: #ececff;
+}
+
+.appbar__title {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-shadow: 0 0 5px rgba(150, 170, 255, 0.6);
+}
+
+.appbar .avatar-img {
+  width: 52px;        
+  height: 52px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+
+  border: 2px solid rgba(255, 255, 255, 0.35); 
+  box-shadow:
+    0 0 12px rgba(255, 255, 255, 0.25),   /* 부드러운 외곽 발광 */
+    0 0 24px rgba(255, 255, 200, 0.15);   /* 달처럼 노란빛 약간 */

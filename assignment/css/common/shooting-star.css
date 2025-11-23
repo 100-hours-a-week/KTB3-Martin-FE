@@ -1,0 +1,64 @@
+.shooting-star {
+  position: fixed;
+  top: 0px;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255,255,255,0.9);
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+  transform: translate(0,0) rotate(45deg);
+  animation: shootingMove linear forwards;
+
+}
+
+.shooting-star::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: -140px;
+
+  width: 140px;      /* 꼬리 전체 길이 */
+  height: 2px;
+  background: linear-gradient(to right, rgba(255,255,255,0.9), transparent);
+  border-radius: 2px;
+
+  /* 핵심: 처음엔 0 → 나중에 정상 길이 */
+  transform-origin: right;
+  transform: scaleX(0);
+  animation: tailGrow var(--tail-duration) ease-out forwards;
+}
+
+
+
+/* 별똥별 이동 경로 */
+@keyframes shootingMove {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(45deg);
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(900px,900px) rotate(45deg);
+  }
+}
+
+/* 꼬리가 자라는 효과 */
+@keyframes tailGrow {
+  0% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
