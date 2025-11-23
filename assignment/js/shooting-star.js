@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function createShootingStar() {
     const container = document.getElementById("shooting-star-container");
-    if (!container) return; // 안전장치
+    if (!container) return; 
 
     const star = document.createElement("div");
     star.className = "shooting-star";

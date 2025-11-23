@@ -1,75 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-  checkSession();
-  loadCurrentUser();
-  loadPosts();
-  const profileImg = document.querySelector("#nav-profile");
-  const profileMenu = document.querySelector("#profile-menu");
+    loadPosts();
 
-
-  // 프로필 클릭 → 메뉴 toggle
-  profileImg.addEventListener("click", () => {
-    profileMenu.classList.toggle("hidden");
-  });
-
-  // 화면 아무데나 클릭하면 메뉴 닫힘
-  document.addEventListener("click", (e) => {
-    if (!profileImg.contains(e.target) && !profileMenu.contains(e.target)) {
-      profileMenu.classList.add("hidden");
-    }
-  });
-});
-
-document.querySelector("#menu-edit").addEventListener("click", () => {
-  window.location.href = "edit-profile.html";
-});
-
-document.querySelector("#menu-password").addEventListener("click", () => {
-  window.location.href = "edit-passwd.html";
-});
-
-document.querySelector("#menu-logout").addEventListener("click", async () => {
-  await fetch("http://localhost:8080/api/user/session", {
-    method: "delete",
-    credentials: "include"
-  });
-  window.location.href = "index.html";
 });
 
 document.querySelector("#btn-write").addEventListener("click", () => {
   window.location.href = "/html/form.html";
 });
-
-document.querySelector("#menu-home").addEventListener("click", () => {
-  window.location.href = "posts.html";
-});
-
-
-
-
-
-async function checkSession() {
-  try {
-    const res = await fetch("http://localhost:8080/api/user", {
-      credentials: "include",
-    });
-
-    // 세션 없음 → 로그인 페이지로 이동
-    if (res.status === 401 || res.status === 403) {
-      alert("로그인이 필요합니다.");
-      window.location.href = "index.html";
-      
-    }
-  
-
-    // 정상 유저면 avatar 표시 및 게시글 로딩
-    const user = await res.json();
-    
-
-  } catch (err) {
-    console.error("checkSession error:", err);
-    window.location.href = "index.html";
-  }
-}
 
 async function loadPosts() {
   const res = await fetch("http://localhost:8080/api/posts", {
@@ -123,21 +59,3 @@ function createCard(post) {
 
   return article;
 }
-
-
-
-
-
-async function loadCurrentUser() {
-  const res = await fetch("http://localhost:8080/api/user", {
-    credentials: "include",
-  });
-
-  const result = await res.json();
-  const user = result.data;
-
-  const profileImg = document.querySelector("#nav-profile");
-  profileImg.src = `http://localhost:8080${user.imageurl}`|| "../images/default-profile.jpg";
-}
-
-
