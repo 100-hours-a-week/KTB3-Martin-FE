@@ -150,20 +150,51 @@ function renderComments(comments) {
       ? baseURL + c.userimage
       : "../images/default-profile.jpg";
 
-    item.innerHTML = `
-      <div class="comment-author">
-        <img class="comment-img" src="${profileImg}" />
-        <span class="comment-name">${c.author}</span>
-        <span class="comment-date">${c.birthTime}</span>
-      </div>
+    const authorWrap = document.createElement("div");
+    authorWrap.classList.add("comment-author");
 
-      <div class="comment-body">${c.content}</div>
+    const img = document.createElement("img");
+    img.classList.add("comment-img");
+    img.src = profileImg;
 
-      <div class="comment-actions">
-        <button class="edit-btn" data-id="${c.id}">수정</button>
-        <button class="delete-btn" data-id="${c.id}">삭제</button>
-      </div>
-    `;
+    const name = document.createElement("span");
+    name.classList.add("comment-name");
+    name.textContent = c.author;
+
+    const date = document.createElement("span");
+    date.classList.add("comment-date");
+    date.textContent = c.birthTime;
+
+    authorWrap.appendChild(img);
+    authorWrap.appendChild(name);
+    authorWrap.appendChild(date);
+
+    /* ===== 본문 ===== */
+    const body = document.createElement("div");
+    body.classList.add("comment-body");
+    body.textContent = c.content; // XSS 방지
+
+    /* ===== 액션 버튼 ===== */
+    const actions = document.createElement("div");
+    actions.classList.add("comment-actions");
+
+    const editBtn = document.createElement("button");
+    editBtn.classList.add("edit-btn");
+    editBtn.dataset.id = c.id;
+    editBtn.textContent = "수정";
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.dataset.id = c.id;
+    deleteBtn.textContent = "삭제";
+
+    actions.appendChild(editBtn);
+    actions.appendChild(deleteBtn);
+
+    /* ===== 전체 조립 ===== */
+    item.appendChild(authorWrap);
+    item.appendChild(body);
+    item.appendChild(actions);
 
     const actionBox = item.querySelector(".comment-actions");
 
@@ -223,8 +254,6 @@ function renderComments(comments) {
     commentListEl.appendChild(item);
   });
 }
-
-
 
 /* -----------------------------
   댓글 등록/수정 API 처리
@@ -300,11 +329,9 @@ function formatNumber(num) {
   return num;
 }
 
-
 function setupLikeBox(postId) {
   const likeBox = document.querySelector(".post-stats .stat-box:nth-child(1)");
   const likeValue = likeBox.querySelector(".stat-value");
-
 
   likeBox.addEventListener("click", async () => {
     const isLiked = likeBox.classList.contains("liked");
