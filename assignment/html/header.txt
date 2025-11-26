@@ -5,8 +5,8 @@
     <div class="appbar__right">
       <img id="nav-profile" class="avatar-img" src="../images/default-profile.jpg" alt="프로필" />
       <div id="profile-menu" class="profile-menu hidden">
+      <div class="menu-item" id="menu-edit">회원정보수정</div>
         <div class="menu-item" id="menu-home">메인으로 돌아가기</div>
-        <div class="menu-item" id="menu-edit">회원정보수정</div>
         <div class="menu-item" id="menu-password">비밀번호수정</div>
         <div class="menu-item" id="menu-logout">로그아웃</div>
       </div>

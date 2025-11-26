@@ -1,5 +1,9 @@
 
+
+
+
 export async function checkSession() {
+  let user = null;
   try {
     const res = await fetch("http://localhost:8080/api/user", {
       credentials: "include",
@@ -14,12 +18,22 @@ export async function checkSession() {
   
 
     // 정상 유저면 avatar 표시 및 게시글 로딩
-    const user = await res.json();
+  
+    const data = await res.json();
+    user = data.data;
+
+
+    
     
 
   } catch (err) {
     console.error("checkSession error:", err);
+    alert("네트워크 오류, 로그인 화면으로 돌아갑니다.")
     window.location.href = "index.html";
   }
+
+  return user;
+
+  
 }
 

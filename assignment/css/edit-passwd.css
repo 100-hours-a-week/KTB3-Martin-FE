@@ -1,200 +1,121 @@
 /* ============================
-   Reset & 기본 설정
-============================ */
-body {
-  margin: 0;
-  padding: 0;
-  background: #f3f4f6;
-  font-family: "Noto Sans KR", sans-serif;
-}
-
-/* ============================
-   헤더(Appbar)
-============================ */
-.appbar {
-  width: 100%;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  position: relative;
-}
-
-.back-btn {
-  position: absolute;
-  left: 20px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.appbar__title {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.appbar__right {
-  position: absolute;
-  right: 24px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.avatar-img {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-  cursor: pointer;
-  border: 1px solid #e5e7eb;
-}
-
-/* 드롭다운 */
-.profile-menu {
-  position: absolute;
-  top: 48px;
-  right: 0;
-  width: 150px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-}
-
-.profile-menu.hidden {
-  display: none;
-}
-
-.menu-item {
-  padding: 12px 14px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.menu-item:hover {
-  background: #f3f4f6;
-}
-
-/* ============================
    메인
 ============================ */
 .main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 52px;
+  padding-top: 72px; /* 헤더 여유 확보 */
+
+  
 }
 
 .page-title {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
+  color: #1f2227;
 }
 
 /* ============================
    비밀번호 폼
 ============================ */
 .password-form {
-  width: 380px;
-  background: #ffffff;
-  padding: 32px 28px;
-  border-radius: 12px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  width: 420px;
+  padding: 40px 36px;
+
+  
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+
+  border-radius: 18px;
+  box-shadow:
+    0 8px 30px rgba(0,0,0,0.45),
+    inset 0 0 18px rgba(255,255,255,0.12),
+    0 0 40px rgba(160,180,255,0.18);
+
+  color: #ececff;
 }
 
-.input-group {
-  margin-bottom: 22px;
+.password-form:hover {
+  box-shadow:
+    0 10px 34px rgba(0, 0, 0, 0.42),
+    inset 0 0 26px rgba(255, 255, 255, 0.10),
+    0 0 80px rgba(140, 160, 255, 0.26);
 }
 
-.input-group label {
-  font-size: 14px;
-  font-weight: 600;
-  display: block;
-  margin-bottom: 6px;
-}
-
+/* INPUT */
 .input-group input {
-  width: 100%;
-  height: 42px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  padding: 0 12px;
-  font-size: 14px;
-  box-sizing: border-box;
+  width: 95%;
+  height: 50px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0 16px;
+  font-size: 15px;
+  color: #eef1ff;
 }
 
 .input-group input:focus {
+  border-color: rgba(165, 150, 255, 0.9);
+  box-shadow: 0 0 0 3px rgba(150, 135, 255, 0.35);
   outline: none;
-  border-color: #bba3ff;
-  box-shadow: 0 0 0 2px rgba(187, 163, 255, 0.25);
 }
 
-.helper-text {
-  font-size: 12px;
-  color: #ef4444;
-  margin-top: 4px;
-  height: 14px;
-}
-
-/* ============================
-   버튼
-============================ */
-.btn-area {
-  margin-top: 16px;
-}
-
-.submit-btn {
-  width: 100%;
-  height: 44px;
-  background: #ACA0EB; /* 비활성화 기본색 */
-  border: none;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.submit-btn.enabled {
-  background: #7F6AEE;  /* 활성화 색상 */
-}
-
-.submit-btn:hover.enabled {
-  background: #6A56E6;
-}
-/* ===============================
-   토스트 메시지
-=============================== */
-.toast-msg {
-  position: fixed;
-  bottom: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #ACA0EB;
-  padding: 12px 20px;
-  border-radius: 999px;
-  color: #fff;
+/* LABEL */
+.input-group label {
+  color: #e8ecff;
   font-size: 14px;
-  opacity: 0;
-  transition: opacity .3s;
-  z-index: 9999;
-}
-.toast-msg.show {
-  opacity: 1;
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
+.btn-area {
+  display: flex;
+  justify-content: center;  /* 가로 중앙 */
+  margin-top: 28px;
+}
+
+
+/* BUTTON - 활성 */
+.submit-btn.enabled {
+  background: #9d8fff;
+  height: 50px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.submit-btn.enabled:hover {
+  background: #8b7df6;
+  transform: translateY(-1px);
+}
+
+/* BUTTON - 비활성 */
+.submit-btn {
+  background: #6c6890;
+  cursor: not-allowed;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+}
+
+
+
+/* 페이지 제목 */
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 42px;
+}
 
 /* 반응형 */
 @media (max-width: 480px) {
   .password-form {
-    width: 90%;
-    padding: 28px 20px;
+    width: 92%;
+    padding: 34px 26px;
+    border-radius: 22px;
   }
 }

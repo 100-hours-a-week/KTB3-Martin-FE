@@ -1,6 +1,8 @@
-// ===============================
-// 전역 변수
-// ===============================
+import * as util from "./common/common.js"
+
+
+
+
 let passwordInput;
 let passwordCheckInput;
 let helperPassword;
@@ -13,7 +15,7 @@ let profileMenu;
 // ===============================
 // DOM 로드 후 초기화
 // ===============================
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",async () => {
   // 비밀번호 입력 요소
   passwordInput = document.getElementById("password");
   passwordCheckInput = document.getElementById("password-check");
@@ -31,79 +33,15 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "/html/posts.html"
     });
 
-  checkSession();
-  loadCurrentUser();
-  initDropdown();
+  const user = await util.checkSession();
+  util.loadCurrentUser(user);
+  util.initDropdown();
+
+
   initPasswordEvents();
 });
 
-// ===============================
-// 세션 체크
-// ===============================
-async function checkSession() {
-  try {
-    const res = await fetch("http://localhost:8080/api/user", {
-      credentials: "include",
-    });
 
-    if (!res.ok) {
-      alert("로그인이 필요합니다.");
-      window.location.href = "/html/index.html";
-    }
-  } catch (err) {
-    console.error("세션 체크 오류:", err);
-    window.location.href = "/html/index.html";
-  }
-}
-
-// ===============================
-// 헤더 - 드롭다운 메뉴 초기화
-// ===============================
-function initDropdown() {
-  const avatar = document.getElementById("nav-profile");
-  const dropdown = document.getElementById("profile-menu");
-
-  avatar.addEventListener("click", (e) => {
-    e.stopPropagation();
-    dropdown.classList.toggle("hidden");
-  });
-
-  document.addEventListener("click", (e) => {
-    if (!dropdown.contains(e.target) && e.target !== avatar) {
-      dropdown.classList.add("hidden");
-    }
-  });
-
-  // 페이지 이동
-  document.getElementById("menu-edit").addEventListener("click", () => {
-    window.location.href = "/html/edit-profile.html";
-  });
-
-  document.getElementById("menu-password").addEventListener("click", () => {
-    window.location.href = "/html/edit-password.html";
-  });
-}
-
-// ===============================
-// 유저 정보 로딩 → 헤더 프로필 이미지 적용
-// ===============================
-async function loadCurrentUser() {
-  try {
-    const res = await fetch("http://localhost:8080/api/user", {
-      credentials: "include",
-    });
-
-    if (!res.ok) return;
-
-    const { data } = await res.json();
-
-    if (data.imageurl) {
-      navProfile.src = `http://localhost:8080${data.imageurl}`;
-    }
-  } catch (err) {
-    console.error("유저 정보 로드 에러:", err);
-  }
-}
 
 // ===============================
 // 비밀번호 유효성 검사
@@ -208,7 +146,7 @@ async function onSubmit(e) {
     const data = await res.json();
 
     if (res.ok) {
-      showToast("수정 완료!");
+      alert("비밀번호 수정 완료")
 
       passwordInput.value = "";
       passwordCheckInput.value = "";

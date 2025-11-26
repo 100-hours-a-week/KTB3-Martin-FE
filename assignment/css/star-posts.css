@@ -1,28 +1,35 @@
-
-
 /* -----------------------------------
    메인 컨테이너
 ----------------------------------- */
 .container {
-  max-width: 768px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px 16px;
 }
 
+/* 인트로 텍스트 */
 .intro p {
   font-size: 18px;
   line-height: 1.6;
   color: #dfe4ff;
   margin-bottom: 20px;
+  
+}
+
+.intro {
+  width: min(1800px, 90%);
+  margin: 0 auto 20px auto;
+  text-align: left; /* 필요하면 유지/제거 */
 }
 
 /* -----------------------------------
    게시글 작성 버튼
 ----------------------------------- */
 .toolbar {
+  width: min(1800px, 90%);
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 20px;
+  margin: 0 auto 20px auto;
 }
 
 .btn {
@@ -47,27 +54,34 @@
 }
 
 /* -----------------------------------
-   게시글 리스트
+   게시글 리스트 (grid 3~4열)
 ----------------------------------- */
 .list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  width: min(1800px, 90%);
+  margin: 0 auto;
+  margin-top: 40px;
 }
 
 /* -----------------------------------
-   게시글 카드 (JS createCard 구조 기반)
+   게시글 카드
 ----------------------------------- */
 .card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 16px;
-  padding: 18px 20px;
+  padding: 20px;
+
   backdrop-filter: blur(6px);
-  
-  color: #f1f1ff;
   box-shadow: 0 4px 20px rgba(0,0,0,0.28);
 
+  height: 170px;
   transition: transform 0.2s ease, box-shadow 0.25s ease;
 }
 
@@ -76,74 +90,72 @@
   box-shadow: 0 6px 24px rgba(0,0,0,0.38);
 }
 
-/* 카드 제목 */
-.card .title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: #f3f4ff;
-}
-
-/* 좋아요 / 댓글 / 조회 */
-.meta {
-  font-size: 13px;
-  color: #b9bce3;
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.meta .sep {
-  width: 3px;
-  height: 3px;
-  background: #b9bce3;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-/* 마지막 줄(작성자 + 시간) */
+/* -----------------------------------
+   1) 프로필 + 작성자명 (맨 위)
+----------------------------------- */
 .row {
+  order: -1; /* 가장 위로 이동 */
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 10px;
 }
 
 .author {
   display: flex;
   align-items: center;
+  gap: 10px;
+}
+
+.author-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.25);
 }
 
 .author-name {
-  font-size: 14px;
-  color: #dfe2ff;
-}
-
-.time {
-  font-size: 12px;
-  color: #9fa5cc;
+  font-size: 15px;
+  color: #f1f3ff;
+  font-weight: 500;
 }
 
 /* -----------------------------------
-   카드 안의 프로필 이미지 (author-avatar)
+   2) 제목 (중앙 강조)
 ----------------------------------- */
-.author-avatar {
-  width: 32px;
-  height: 32px;
-  object-fit: cover; /* ← 찌그러짐 방지 */
-  border-radius: 50%;
-  margin-right: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+.card .title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 5px 0;
 }
 
+/* -----------------------------------
+   3) 좋아요 / 댓글 / 조회
+----------------------------------- */
+.meta {
+  font-size: 14px;
+  display: flex;
+  gap: 12px;
+  color: #cfd2ff;
+}
 
+.meta .sep {
+  width: 4px;
+  height: 4px;
+  background: #aeb3ff;
+  border-radius: 50%;
+}
 
-
-
-
-
-
-
-
+/* -----------------------------------
+   4) 날짜 (맨 아래)
+----------------------------------- */
+.time {
+  font-size: 13px;
+  color: #b8bdff;
+  
+}
 
 
 

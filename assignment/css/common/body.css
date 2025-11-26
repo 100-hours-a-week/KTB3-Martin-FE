@@ -1,9 +1,12 @@
 body {
+  padding-top: 64px;
   margin: 0;
   font-family: "Noto Sans KR", sans-serif;
   background: linear-gradient(180deg, #0b0d22, #11204b, #1d2f55);
+  background-attachment: fixed;
   color: #e9e9ff;
   overflow-x: hidden;
+  height: 100vh;
 }
 
 /* 은은한 작은 별 패턴 */
@@ -17,7 +20,6 @@ body::before {
   opacity: 0.05;
   pointer-events: none;
 }
-
 
 
 

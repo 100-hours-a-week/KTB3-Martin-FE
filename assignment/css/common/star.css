@@ -31,7 +31,14 @@
     1300px 250px #fff,
     1500px 100px #fff,
     1700px 450px #fff,
-    1900px 50px #fff;
+    1900px 50px #fff,
+    
+    200px 900px #fff,
+    600px 1100px #fff,
+    1000px 1300px #fff,
+    1400px 1500px #fff,
+    1800px 1700px #fff;
+
   opacity: 0.6;
   animation: driftDiag 140s linear infinite;
 }
@@ -48,7 +55,11 @@
     900px 300px #fff8,
     1200px 100px #fff8,
     1500px 450px #fff8,
-    1800px 200px #fff8;
+    1800px 200px #fff8,
+    300px 900px #fff8,
+    700px 1200px #fff8,
+    1100px 1500px #fff8,
+    1600px 1800px #fff8;
   opacity: 0.4;
   animation: driftDiag 180s linear infinite;
 }
@@ -63,7 +74,10 @@
     800px 450px #fff4,
     1200px 350px #fff4,
     1600px 100px #fff4,
-    1900px 400px #fff4;
+    1900px 400px #fff4,
+    250px 1000px #fff4,
+    900px 1400px #fff4,
+    1500px 1700px #fff4;
   opacity: 0.25;
   animation: driftDiag 220s linear infinite;
 }

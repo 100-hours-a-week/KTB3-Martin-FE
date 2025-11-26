@@ -53,9 +53,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector("#menu-edit")?.addEventListener("click", () => {
     window.location.href = "/html/edit-profile.html";
   });
+  document.querySelector("#menu-home")?.addEventListener("click", () => {
+    window.location.href = "/html/posts.html";
+  });
 
   document.querySelector("#menu-password")?.addEventListener("click", () => {
-    window.location.href = "/html/edit-password.html";
+    window.location.href = "/html/edit-passwd.html";
   });
 
   document.querySelector("#menu-logout")?.addEventListener("click", async () => {
@@ -149,7 +152,6 @@ submitBtn.addEventListener("click", async () => {
     image: imageurl,
   };
 
-  console.log(imageurl);
   
 
   try {

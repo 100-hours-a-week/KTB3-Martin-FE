@@ -1,80 +1,58 @@
+import * as util from "../common/common.js";
+
 let currentUser = null;
-let editMode = false;        // 지금 수정 모드인지
-let editCommentId = null;    // 수정 중인 댓글 ID
+let editMode = false; // 지금 수정 모드인지
+let editCommentId = null; // 수정 중인 댓글 ID
 
-document.addEventListener("DOMContentLoaded", () => {
+const deleteBtn = document.querySelector("#btn-delete");
 
-  const deleteBtn = document.querySelector("#btn-delete");
-  const modal = document.querySelector("#post-delete-modal");
+//모달
+const modal = document.querySelector("#post-delete-modal");
+const confirmBtn = document.querySelector("#post-modal-confirm");
+const cancelBtn = document.querySelector("#post-modal-cancel");
 
-  const confirmBtn = document.querySelector("#post-modal-confirm");
-  const cancelBtn = document.querySelector("#post-modal-cancel");
+document.addEventListener("DOMContentLoaded", async () => {
+  currentUser = await util.checkSession();
+  util.loadCurrentUser(currentUser);
+  util.initDropdown();
 
-  checkSession();
-  loadCurrentUser();
   loadPostDetail();
 
-  document.querySelector(".appbar__title").addEventListener("click", () => {
-        window.location.href = "/html/posts.html"
-    });
-
   // 댓글 등록/수정 버튼 이벤트
-  document.querySelector(".comment-submit").addEventListener("click", handleCommentSubmit);
+  document
+    .querySelector(".comment-submit")
+    .addEventListener("click", handleCommentSubmit);
 
   // Enter 키로도 등록/수정
   document.querySelector(".comment-input").addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleCommentSubmit();
-      }
-    });
-
-  if (deleteBtn) {
-    deleteBtn.addEventListener("click", () => {
-      modal.classList.remove("hidden");
-    });
-  }
-
-  // 취소 버튼
-  cancelBtn.addEventListener("click", () => {
-    modal.classList.add("hidden");
-  });
-
-  // 확인 버튼 → 게시글 삭제 API 호출
-  confirmBtn.addEventListener("click", async () => {
-    const params = new URLSearchParams(location.search);
-    const postId = params.get("postId");
-
-    const res = await fetch(`http://localhost:8080/api/posts/${postId}`, {
-      method: "DELETE",
-      credentials: "include",
-    });
-
-    modal.classList.add("hidden");
-
-    if (res.ok) {
-      alert("게시글이 삭제되었습니다.");
-      window.location.href = "./posts.html";   // 목록으로 이동
-    } else {
-      alert("게시글 삭제 실패");
     }
   });
 });
 
-document.querySelector("#menu-edit").addEventListener("click", () => {
-  window.location.href = "edit-profile.html";
+cancelBtn.addEventListener("click", () => {
+  modal.classList.add("hidden");
 });
 
-document.querySelector("#menu-password").addEventListener("click", () => {
-  window.location.href = "edit-passwd.html";
-});
+// 확인 버튼 → 게시글 삭제 API 호출
+confirmBtn.addEventListener("click", async () => {
+  const params = new URLSearchParams(location.search);
+  const postId = params.get("postId");
 
-document.querySelector("#menu-logout").addEventListener("click", async () => {
-  await fetch("http://localhost:8080/api/user/session", {
-    method: "delete",
-    credentials: "include"
+  const res = await fetch(`http://localhost:8080/api/posts/${postId}`, {
+    method: "DELETE",
   });
-  window.location.href = "index.html";
+
+  modal.classList.add("hidden");
+
+  if (res.ok) {
+    alert("게시글이 삭제되었습니다.");
+    window.location.href = "./posts.html"; // 목록으로 이동
+  } else {
+    alert("게시글 삭제 실패");
+  }
 });
 
 document.getElementById("btn-edit").addEventListener("click", () => {
@@ -82,8 +60,6 @@ document.getElementById("btn-edit").addEventListener("click", () => {
   const postId = params.get("postId");
   window.location.href = `/html/form.html?postId=${postId}`;
 });
-
-
 
 async function loadPostDetail() {
   const params = new URLSearchParams(location.search);
@@ -143,12 +119,9 @@ function renderPost(post) {
   // 좋아요/조회수/댓글수
   const statValues = document.querySelectorAll(".stat-value");
   statValues[0].textContent = formatNumber(post.likes);
-  statValues[1].textContent = formatNumber(post.view);
-  statValues[2].textContent = formatNumber(post.comments);
 
-  loadLikeStatus(post.id);
+  // loadLikeStatus(post.id);
   setupLikeBox(post.id);
-
 }
 
 /* -----------------------------
@@ -213,7 +186,7 @@ function renderComments(comments) {
       editCommentId = c.id;
     });
 
-      // ⭐ 삭제 버튼 클릭 이벤트
+    // ⭐ 삭제 버튼 클릭 이벤트
     item.querySelector(".delete-btn").addEventListener("click", () => {
       const modal = document.querySelector("#delete-modal");
       const confirmBtn = document.querySelector("#modal-confirm");
@@ -221,35 +194,37 @@ function renderComments(comments) {
 
       modal.classList.remove("hidden");
 
-  // 확인 클릭 시 실제 삭제
-  confirmBtn.onclick = async () => {
-    const res = await fetch(`http://localhost:8080/api/comments/${c.postid}/${c.id}`, {
-      method: "DELETE",
-      credentials: "include",
+      // 확인 클릭 시 실제 삭제
+      confirmBtn.onclick = async () => {
+        const res = await fetch(
+          `http://localhost:8080/api/comments/${c.postid}/${c.id}`,
+          {
+            method: "DELETE",
+            credentials: "include",
+          }
+        );
+
+        modal.classList.add("hidden");
+
+        if (res.ok) {
+          alert("댓글이 삭제되었습니다.");
+          loadPostDetail();
+        } else {
+          alert("삭제 실패");
+        }
+      };
+
+      // 취소 클릭 시 모달 닫기
+      cancelBtn.onclick = () => {
+        modal.classList.add("hidden");
+      };
     });
-
-    modal.classList.add("hidden");
-
-    if (res.ok) {
-      alert("댓글이 삭제되었습니다.");
-      loadPostDetail();
-    } else {
-      alert("삭제 실패");
-    }
-  };
-
-  // 취소 클릭 시 모달 닫기
-  cancelBtn.onclick = () => {
-    modal.classList.add("hidden");
-  };
-});
-
-
-    
 
     commentListEl.appendChild(item);
   });
 }
+
+
 
 /* -----------------------------
   댓글 등록/수정 API 처리
@@ -272,12 +247,15 @@ async function handleCommentSubmit() {
   if (editMode) {
     console.log(editCommentId);
     console.log(content);
-    const res = await fetch(`http://localhost:8080/api/comments/${postId}/${editCommentId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ content }),
-    });
+    const res = await fetch(
+      `http://localhost:8080/api/comments/${postId}/${editCommentId}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ content }),
+      }
+    );
 
     if (!res.ok) {
       alert("댓글 수정 실패");
@@ -304,7 +282,6 @@ async function handleCommentSubmit() {
     body: JSON.stringify({ content }),
   });
 
-
   if (!res.ok) {
     alert("댓글 등록 실패");
     return;
@@ -313,71 +290,6 @@ async function handleCommentSubmit() {
   alert("댓글이 등록되었습니다.");
   textarea.value = "";
   loadPostDetail();
-}
-
-/* -----------------------------
-  프로필 드롭다운
--------------------------------- */
-document.addEventListener("DOMContentLoaded", () => {
-  const profileImg = document.querySelector("#nav-profile");
-  const profileMenu = document.querySelector("#profile-menu");
-
-  profileImg.addEventListener("click", () => {
-    profileMenu.classList.toggle("hidden");
-  });
-
-  document.addEventListener("click", (e) => {
-    if (!profileImg.contains(e.target) && !profileMenu.contains(e.target)) {
-      profileMenu.classList.add("hidden");
-    }
-  });
-});
-
-/* -----------------------------
-  로그인 사용자 정보
--------------------------------- */
-async function loadCurrentUser() {
-  try {
-    const res = await fetch("http://localhost:8080/api/user", {
-      credentials: "include",
-    });
-
-    if (!res.ok) return;
-
-    const result = await res.json();
-    currentUser = result.data;
-
-    const profileImg = document.querySelector("#nav-profile");
-    const baseURL = "http://localhost:8080";
-
-    if (currentUser.imageurl) {
-      profileImg.src = baseURL + currentUser.imageurl;
-    } else {
-      profileImg.src = "../images/default-profile.jpg";
-    }
-  } catch (err) {
-    console.log("사용자 정보 로드 실패:", err);
-  }
-}
-
-/* -----------------------------
-  세션 체크
--------------------------------- */
-async function checkSession() {
-  try {
-    const res = await fetch("http://localhost:8080/api/user", {
-      credentials: "include",
-    });
-
-    if (res.status === 401 || res.status === 403) {
-      alert("로그인이 필요합니다.");
-      window.location.href = "index.html";
-    }
-
-  } catch (err) {
-    console.error("checkSession error:", err);
-    window.location.href = "index.html";
-  }
 }
 
 // 숫자 축약 (1k, 10k, 100k)
@@ -389,12 +301,12 @@ function formatNumber(num) {
 }
 
 async function loadLikeStatus(postId) {
-  const res = await fetch(`http://localhost:8080/api/likes/mylike/${postId}`, {
-    credentials: "include",
-  });
+  const res = await fetch(
+    `http://localhost:8080/api/likes/mylike/${postId}`,
+    {}
+  );
 
   const liked = await res.json(); // true/false
-
   const likeBox = document.querySelector(".post-stats .stat-box:nth-child(1)");
 
   if (liked) {
@@ -404,9 +316,20 @@ async function loadLikeStatus(postId) {
   }
 }
 
+// async function islike(postId){
+//   const res = await fetch(
+//     `http://localhost:8080/api/likes/mylike/${postId}`,
+//     {}
+//   );
+//   const liked = await renderComments.json();
+//   return liked
+
+// }
+
 function setupLikeBox(postId) {
   const likeBox = document.querySelector(".post-stats .stat-box:nth-child(1)");
   const likeValue = likeBox.querySelector(".stat-value");
+
 
   likeBox.addEventListener("click", async () => {
     const isLiked = likeBox.classList.contains("liked");
@@ -421,7 +344,9 @@ function setupLikeBox(postId) {
 
       if (res.ok) {
         likeBox.classList.remove("liked");
-        likeValue.textContent = formatNumber(Number(likeValue.textContent.replace("k","")) - 1);
+        likeValue.textContent = formatNumber(
+          Number(likeValue.textContent.replace("k", "")) - 1
+        );
       }
     }
     // 좋아요 추가
@@ -433,10 +358,10 @@ function setupLikeBox(postId) {
 
       if (res.ok) {
         likeBox.classList.add("liked");
-        likeValue.textContent = formatNumber(Number(likeValue.textContent.replace("k","")) + 1);
+        likeValue.textContent = formatNumber(
+          Number(likeValue.textContent.replace("k", "")) + 1
+        );
       }
     }
   });
 }
-
-

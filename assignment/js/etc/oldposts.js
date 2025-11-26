@@ -69,6 +69,7 @@ async function checkSession() {
 
   } catch (err) {
     console.error("checkSession error:", err);
+    alert("서버와 연결불가.");
     window.location.href = "index.html";
   }
 }

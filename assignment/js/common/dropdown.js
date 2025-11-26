@@ -1,9 +1,7 @@
-document.addEventListener("DOMContentLoaded", ()=>{
-    initDropdown();
-});
 
 
-async function initDropdown() {
+
+ export async function initDropdown() {
   const profileImg = document.querySelector("#nav-profile");
   const menu = document.querySelector("#profile-menu");
 

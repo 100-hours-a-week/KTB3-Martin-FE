@@ -1,11 +1,11 @@
 :root {
-  --bg: #f4f5f7;
-  --border: #dcdcdc;
-  --text-main: #111111;
-  --text-sub: #777777;
-  --primary: #b48cff;
-  --radius: 10px;
-  --transition: 0.2s ease;
+  --bg: #0f1120;
+  --border: rgba(255,255,255,0.22);
+  --text-main: #e9ecff;
+  --text-sub: #c4c8e8;
+  --primary: #8e79ff;
+  --radius: 12px;
+  --transition: 0.25s ease;
   --header-height: 104px;
 }
 
@@ -13,92 +13,51 @@
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  font-family:
-    "Noto Sans KR",
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    sans-serif;
-  background-color: var(--bg);
-  color: var(--text-main);
-}
-
-/* ===== 헤더 ===== */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--header-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 48px;
-  border-bottom: 1px solid var(--border);
-  background-color: var(--bg);
-  z-index: 10;
-}
-
-.back-btn {
-  width: 56px;
-  height: 40px;
-  margin-right: 24px;
-  border-radius: 8px;
-  border: 2px solid #ff6b6b;
-  background: transparent;
-  font-size: 22px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translateX(-400%);
-  transition: var(--transition);
-}
-
-.back-btn:hover {
-  background-color: #ffecec;
-}
-
-.header-title {
-  font-size: clamp(20px, 2vw, 26px);
-  position: absolute;
-  font-weight: 700;
-  align-items: center;
-  justify-content: center;
-}
-
-/* ===== 메인 ===== */
+/* ===========================
+      메인 컨테이너
+=========================== */
 .main {
-  min-height: 100vh;
-  padding-top: var(--header-height);
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
 .signup-wrapper {
-  width: 100%;
-  max-width: 480px;
-  margin-top: 80px;
-  padding: 32px 40px 40px;
-  background-color: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  width: min(480px, 92%);
+
+
+  padding: 36px 40px 44px;
+
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(12px);
+
+  border-radius: 22px;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.45),
+    inset 0 0 18px rgba(255,255,255,0.12),
+    0 0 40px rgba(160,180,255,0.18);
+
+  color: var(--text-main);
 }
 
 .signup-title {
-  margin: 0 0 32px;
+  margin: 0 0 30px;
   text-align: center;
   font-size: 24px;
   font-weight: 700;
+
+  letter-spacing: 1px;
+  text-shadow: 0 0 6px rgba(180,200,255,0.6);
 }
 
-/* ===== 프로필 업로드 ===== */
+/* ===========================
+      프로필 업로드
+=========================== */
 .profile-label-wrap {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-size: 14px;
   font-weight: 500;
+  color: var(--text-main);
 }
 
 .profile-helper {
@@ -111,50 +70,62 @@ body {
 .profile-upload {
   display: flex;
   justify-content: center;
-  margin-bottom: 24px;
+  margin-bottom: 26px;
 }
 
 .profile-placeholder {
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  background-color: #e5e5e5;
+
+  background: rgba(255,255,255,0.12);
+  border: 2px solid rgba(255,255,255,0.22);
+
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
-  color: #888;
+
+  font-size: 42px;
+  color: rgba(230,230,255,0.7);
+
   cursor: pointer;
   transition: var(--transition);
   user-select: none;
   overflow: hidden;
   position: relative;
+
+  box-shadow:
+    0 0 18px rgba(255,255,255,0.18),
+    0 0 32px rgba(130,150,255,0.16);
 }
 
 .profile-placeholder:hover {
-  background-color: #d8d8d8;
-  transform: scale(1.02);
+  transform: scale(1.03);
+  border-color: rgba(255,255,255,0.35);
 }
 
 .profile-plus {
   font-size: 40px;
-  color: #888;
-  position: absolute; /* ⭐ 이미지 위에 떠있게 */
+  color: rgba(230,230,255,0.65);
+  position: absolute;
 }
 
 #profilePreview {
-  position: absolute; /* ⭐ 원형 전체를 덮도록 */
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* ⭐ 이미지 꽉 차게 */
-  display : none;
+  object-fit: cover;
+  display: none;
   z-index: 1;
 }
-/* ===== 입력폼 ===== */
+
+/* ===========================
+      입력 폼
+=========================== */
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .label {
@@ -162,27 +133,33 @@ body {
   font-size: 13px;
   font-weight: 500;
   margin-bottom: 6px;
+  color: var(--text-main);
 }
 
 .label span.required {
-  color: #ff4d4f;
+  color: #ff7b84;
   margin-right: 4px;
 }
 
 .input {
   width: 100%;
   padding: 12px 12px;
+
   border-radius: var(--radius);
   border: 1px solid var(--border);
+
+  background: rgba(255,255,255,0.09);
+  color: var(--text-main);
+
   font-size: 14px;
   outline: none;
   transition: var(--transition);
-  background-color: #ffffff;
 }
 
 .input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(180, 140, 255, 0.2);
+  border-color: rgba(170, 180, 255, 0.8);
+  background: rgba(255,255,255,0.16);
+  box-shadow: 0 0 0 2px rgba(180, 140, 255, 0.25);
 }
 
 .helper-text {
@@ -193,58 +170,66 @@ body {
 
 /* 에러 상태 */
 .form-group.error .input {
-  border-color: #ff4d4f;
+  border-color: #ff6b6b;
+  background: rgba(255,80,80,0.08);
 }
 
 .form-group.error .helper-text {
-  color: #ff4d4f;
+  color: #ff6b6b;
 }
 
-/* ===== 버튼 ===== */
+/* ===========================
+      버튼
+=========================== */
 .btn-primary {
   width: 100%;
-  padding: 13px 0;
-  margin-top: 8px;
+  padding: 14px 0;
+  margin-top: 6px;
+
   border: none;
   border-radius: var(--radius);
-  background-color: var(--primary);
+
+  /* background: linear-gradient(135deg, #8e79ff, #7f6aee); */
   color: #ffffff;
+
   font-size: 15px;
   font-weight: 600;
+
   cursor: pointer;
   transition: var(--transition);
+
+  box-shadow: 0 4px 15px rgba(130, 120, 255, 0.25);
 }
 
 .btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.16);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(130, 120, 255, 0.35);
 }
 
 .login-link-wrap {
-  margin-top: 14px;
+  margin-top: 16px;
   text-align: center;
   font-size: 13px;
+  color: var(--text-sub);
 }
 
 .login-link-wrap a {
-  color: #555555;
+  color: #cfd3ff;
   text-decoration: underline;
   cursor: pointer;
   transition: var(--transition);
 }
 
 .login-link-wrap a:hover {
-  color: #222222;
+  color: #ffffff;
 }
 
-/* ===== 반응형 ===== */
+/* ===========================
+      반응형
+=========================== */
 @media (max-width: 600px) {
-  .header {
-    padding: 0 16px;
-  }
-
   .signup-wrapper {
-    margin: 40px 16px 24px;
-    padding: 24px 20px 28px;
+    margin: 80px 16px 24px;
+    padding: 26px 22px 30px;
   }
 }

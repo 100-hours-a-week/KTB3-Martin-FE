@@ -3,29 +3,32 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>게시글 작성 | 아무 말 대잔치</title>
-  <link rel="stylesheet" href="../css/form.css" />
+  <title>별 헤는 밤</title>
+  <link rel="stylesheet" href="../css/star-form.css" />
+  <link rel="stylesheet" href="../css/common/common.css" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <header class="appbar">
-    <button class="back-btn" type="button" onclick="history.back()">←</button>
-    <div class="appbar__title">아무 말 대잔치</div>
-
+    <div></div>
+    
+    <div class="appbar__title"></div>
     <div class="appbar__right">
       <img id="nav-profile" class="avatar-img" src="../images/default-profile.jpg" alt="프로필" />
       <div id="profile-menu" class="profile-menu hidden">
-        <div class="menu-item" id="menu-edit">회원정보수정</div>
+      <div class="menu-item" id="menu-edit">회원정보수정</div>
+        <div class="menu-item" id="menu-home">메인으로 돌아가기</div>
         <div class="menu-item" id="menu-password">비밀번호수정</div>
         <div class="menu-item" id="menu-logout">로그아웃</div>
       </div>
     </div>
+
   </header>
 
   <main class="container">
-    <h2 class="page-title">게시글 작성</h2>
+    <h2 class="page-title">밤 하늘에 쓰는 이야기</h2>
 
     <!-- form submit → JS로만 처리하도록 변경 -->
     <form class="post-form" id="postForm" onsubmit="return false;">
@@ -54,6 +57,13 @@
     </form>
   </main>
 
+
   <script src="../js/form.js"></script>
+  <script src="../js/shooting-star.js"></script>
 </body>
+<div class="stars"></div>
+<div class="stars2"></div>
+<div class="stars3"></div>
+<div id="shooting-star-container"></div>
+
 </html>

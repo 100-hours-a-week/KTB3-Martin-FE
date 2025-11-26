@@ -1,346 +1,207 @@
 /* =============================
-   기본 설정 & 테마
+   공통 테마 (지난 컨셉 기반)
 ============================= */
 :root{
-  --bg: #f4f5f7;
-  --surface: #ffffff;
-  --border: #dcdfe4;
-  --muted: #8a8f98;
-  --text: #1f2227;
-  --primary: #7d8aff;
-  --primary-700: #6b77e5;
-  --primary-100: #e9ebff;
-  --danger: #ef4444;
-  --shadow: 0 2px 10px rgba(0,0,0,0.06);
-  --radius: 12px;
+  --bg: radial-gradient(circle at top, #1d1b33, #0e0f1a 60%);
+  --surface: rgba(255, 255, 255, 0.06);
+  --surface-strong: rgba(255, 255, 255, 0.12);
+  --border: rgba(255, 255, 255, 0.18);
+  --text: #e9ecff;
+  --muted: #b7bade;
+  --primary: #9d8cff;
+  --primary-glow: rgba(160, 150, 255, 0.35);
+  --danger: #ff6a7a;
+  --radius: 16px;
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
 }
 
-* { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; }
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: "Noto Sans KR", sans-serif;
-}
-
-/* =============================
-   헤더(AppBar)
-============================= */
-.appbar {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;  /* ← 핵심! */
-  align-items: center;
-  height: 64px;
-  padding: 0 20px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-}
-
-.appbar__right {
-  padding-right: max(16px, (100vw - var(--container-max)) / 2);
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 12px;
-  position: relative; /* ⭐ 드롭다운 기준점 */
-}
-
-
-.appbar__title {
-  font-size: 18px;
-  font-weight: 700;
-  cursor : pointer;
-}
-
-
-
-.avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: 2px solid var(--border);
-  background-size: cover;
-  background-position: center;
-  cursor: pointer;
-  transition: 0.15s ease;
-}
-.avatar:hover {
-  transform: scale(1.05);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-
-/* 드롭다운 */
-.dropdown {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: 48px;
-  width: 160px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-.dropdown.active { display: block; }
-
-.dropdown button {
-  width: 100%;
-  padding: 10px 12px;
-  text-align: left;
-  border: none;
-  background: transparent;
-  font-size: 14px;
-  cursor: pointer;
-}
-.dropdown button:hover {
-  background: #e9e9e9;
-}
 
 /* =============================
    컨테이너
 ============================= */
-.container {
-  max-width: 480px;
-  width: 100%;
-  margin: 40px auto 120px;
-  padding: 0 20px;
-  text-align: center;
+.container{
+  width: min(420px, 90%);
+  margin: 120px auto;
+  padding: 40px 32px 60px;
+
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+
+  border-radius: 18px;
+  box-shadow:
+    0 8px 30px rgba(0,0,0,0.45),
+    inset 0 0 18px rgba(255,255,255,0.12),
+    0 0 40px rgba(160,180,255,0.18);
+
+  color: #ececff;
 }
 
-h2 {
-  font-size: 24px;
+/* =============================
+   제목
+============================= */
+h2{
+  font-size: 26px;
   font-weight: 700;
   margin-bottom: 32px;
+  color: #ffffff;
 }
+
 
 /* =============================
    프로필 이미지
 ============================= */
-.profile-label {
+.profile-label{
+  text-align: left;
   font-size: 14px;
-  font-weight: 700;
-  color: var(--text);
-  text-align: left;         /* ← 핵심! 왼쪽 정렬 */
-  margin-bottom: 8px;       /* 라벨과 이미지 사이 간격 */
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 10px;
 }
 
-.profile-photo {
+.profile-photo{
   position: relative;
   width: 150px;
   height: 150px;
-  margin: 0 auto 40px;
+  margin: 0 auto 32px;
 }
 
-.profile-photo img {
+.profile-photo img{
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 2px solid var(--border);
   object-fit: cover;
-  background: #eee;
+
+  border: 2px solid var(--border);
+  box-shadow:
+    0 0 12px rgba(255, 255, 255, 0.12),
+    0 0 18px var(--primary-glow);
 }
 
-.profile-photo {
-  position: relative;
-  width: 150px;
-  height: 150px;
-  margin: 0 auto 40px;
-}
-
-#btnChangePhoto {
+#btnChangePhoto{
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top:50%;
+  left:50%;
   transform: translate(-50%, -50%);
-  padding: 8px 16px;
-  font-size: 14px;
+
+  font-size: 13px;
+  background: rgba(0,0,0,0.55);
+  border-radius: 14px;
   color: #fff;
-  background: rgba(0,0,0,0.6);
-  border: none;
-  border-radius: 20px;
+
   cursor: pointer;
+  transition: 0.2s;
+}
+
+#btnChangePhoto:hover{
+  background: rgba(255,255,255,0.25);
 }
 
 
 /* =============================
    입력 폼
 ============================= */
-.form-group {
-  max-width: 480px;
-  margin: 0 auto 20px;
+.form-group{
   text-align: left;
+  margin-bottom: 24px;
+  width:94%;
 }
 
-.form-group label {
-  font-size: 14px;
-  font-weight: 600;
+.form-group label{
+  font-size: 13px;
+  color: var(--muted);
   margin-bottom: 6px;
   display: block;
 }
 
-.form-group input {
+.form-group input{
   width: 100%;
-  height: 46px;
-  padding: 12px 14px;
+  padding: 14px;
   font-size: 15px;
+
+  background: rgba(255,255,255,0.08);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  outline: none;
+  border-radius: 12px;
+  color: var(--text);
+
+  backdrop-filter: blur(6px);
 }
 
-.form-group input:focus {
+.form-group input:focus{
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-100);
+  box-shadow: 0 0 0 3px rgba(130, 115, 255, 0.28);
 }
 
-.form-group input[readonly] {
-  background: #f6f7fb;
-  color: #6c717a;
-}
-
-.helper {
+.helper{
   margin-top: 6px;
   font-size: 12px;
   color: var(--danger);
 }
 
+
 /* =============================
    버튼
 ============================= */
-.btn {
+.btn{
   width: 100%;
-  max-width: 480px;
-  height: 48px;
-  border-radius: 10px;
-  border: none;
+  padding: 14px;
   font-weight: 700;
+  border-radius: 12px;
   cursor: pointer;
+  transition: 0.2s;
   margin-bottom: 16px;
-  transition: 0.15s;
 }
 
-/* 수정하기 */
-#btnUpdate {
+/* 수정 */
+#btnUpdate{
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 0 12px var(--primary-glow);
+}
+#btnUpdate:hover{
+  background: #8c7bef;
+}
+
+/* 탈퇴 */
+#btnDelete{
+  background: transparent;
+  border: 1px solid rgba(255, 120, 120, 0.45);
+  color: var(--danger);
+}
+#btnDelete:hover{
+  background: rgba(255, 120, 120, 0.18);
+}
+
+
+/* =============================
+   토스트
+============================= */
+.toast-msg{
+  background: var(--primary);
+  color: #fff;
+  border-radius: 999px;
+}
+
+
+/* =============================
+   회원탈퇴 모달
+============================= */
+.delete-modal{
+  backdrop-filter: blur(6px);
+}
+
+.delete-modal__content{
+  background: var(--surface);
+  border-radius: var(--radius);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.modal-btn.cancel{
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+}
+
+.modal-btn.confirm{
   background: var(--primary);
   color: #fff;
 }
-#btnUpdate:hover {
-  background: var(--primary-700);
-}
-
-/* 회원탈퇴 */
-#btnDelete {
-  background: #fff;
-  border: 1px solid #f5c2c2;
-  color: var(--danger);
-}
-#btnDelete:hover {
-  background: #ffe7e7;
-}
-
-/* =============================
-   토스트 메시지
-============================= */
-.toast-msg {
-  position: fixed;
-  bottom: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #ACA0EB;
-  padding: 12px 20px;
-  border-radius: 999px;
-  color: #fff;
-  font-size: 14px;
-  opacity: 0;
-  transition: opacity .3s;
-  z-index: 9999;
-}
-.toast-msg.show {
-  opacity: 1;
-}
-
-/* =============================
-   반응형
-============================= */
-@media (max-width: 480px) {
-  .container {
-    margin-top: 30px;
-  }
-}
-
-/* ===== 회원탈퇴 모달 ===== */
-
-.delete-modal.hidden {
-  display: none;
-}
-
-.delete-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 3000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.delete-modal__backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-}
-
-.delete-modal__content {
-  position: relative;
-  width: 330px;
-  background: #fff;
-  padding: 32px 24px 24px;
-  border-radius: 12px;
-  z-index: 3010;
-  text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.delete-modal__title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #111;
-  margin-bottom: 12px;
-}
-
-.delete-modal__text {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 24px;
-}
-
-.delete-modal__buttons {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-.modal-btn {
-  width: 110px;
-  padding: 10px 0;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-}
-
-.modal-btn.cancel {
-  background: #1f1f1f;
-  color: #fff;
-}
-
-.modal-btn.confirm {
-  background: #bba3ff;
-  color: #fff;
-}
-

@@ -19,7 +19,7 @@ const passwordHelper = passwordInput.nextElementSibling;
 const passwordCheckHelper = passwordCheckInput.nextElementSibling;
 const nicknameHelper = nicknameInput.nextElementSibling;
 
-const validatestate = {
+const validateState = {
   profile: false,
   email: false,
   password: false,
@@ -27,10 +27,23 @@ const validatestate = {
   nickname: false,
 };
 
+const state = {
+  profile: { valid: false, message: "" },
+  email: { valid: false, message: "" },
+  password: { valid: false, message: "" },
+  checkingpassword: { valid: false, message: "" },
+  nickname: { valid: false, message: "" }
+};
+
+
+
+function setState(key, value){
+  validateState[key] = value;
+}
 let uploadedImageFile = null; // 실제 업로드된 파일
 
 profilePreview.addEventListener("click", (e) => {
-  if (!window.profileUploaded) {
+  if (!validateState.profile) {
     fileInput.click();
     return;
   } else {
@@ -38,11 +51,11 @@ profilePreview.addEventListener("click", (e) => {
     if (ok) {
       e.preventDefault();
       e.stopPropagation();
-      profilePreview.removeAttribute("src");
+      profilePreview.src = "";
       profilePreview.style.display = "none";
       plusIcon.style.display = "block";
       profileHelper.textContent = "*프로필 사진을 추가해주세요";
-      validatestate.profile = false;
+      validateState.profile = false;
       uploadedImageFile = null;
       fileInput.value = "";
     }
@@ -60,30 +73,26 @@ fileInput.addEventListener("change", () => {
     profilePreview.src = e.target.result;
     profilePreview.style.display = "block";
     plusIcon.style.display = "none";
-    validatestate.profile = true;
+    validateState.profile = true;
     profileHelper.textContent = "";
   };
   reader.readAsDataURL(file);
 });
 
-emailInput.addEventListener("blur", () => {
-  validatestate.email = validateEmail();
-  validateAll();
-});
 
-passwordInput.addEventListener("blur", () => {
-  validatestate.password = validatePassword();
-  validateAll();
-});
 
-passwordCheckInput.addEventListener("blur", () => {
-  validatestate.checkingpassword = validatePasswordCheck();
-  validateAll();
-});
-nicknameInput.addEventListener("blur", () => {
-  validatestate.nickname = validateNickname();
-  validateAll();
-});
+function bindValidate(input, key, validator) {
+  input.addEventListener("blur", () => {
+    validateState[key] = validator();
+    console.log(validateState[key]);
+    validateAll();
+  });
+}
+
+bindValidate(emailInput, "email", validateEmail);
+bindValidate(passwordInput, "password", validatePassword);
+bindValidate(passwordCheckInput, "checkingpassword", validatePasswordCheck);
+bindValidate(nicknameInput, "nickname", validateNickname);
 
 async function validateEmail() {
   const email = emailInput.value.trim();
@@ -214,11 +223,12 @@ async function validateNickname() {
 ============================ */
 function validateAll() {
   const ok =
-    validatestate.email &&
-    validatestate.password &&
-    validatestate.checkingpassword &&
-    validatestate.nickname &&
-    validatestate.profile;
+    validateState.email &&
+    validateState.password &&
+    validateState.checkingpassword &&
+    validateState.nickname &&
+    validateState.profile;
+  
 
   if (ok) {
     signupBtn.disabled = false;
