@@ -22,9 +22,10 @@
       <span class="profile-helper">*프로필 사진을 추가해주세요</span>
     </div>
     <div class="profile-upload">
-      <label for="profile" class="profile-placeholder">
-        <span id="profilePlus" class="profile-plus">+</span>
+
+      <label for = "profile"  class="profile-placeholder">
         <img id="profilePreview" src="">
+        <span id="profilePlus" class="profile-plus">+</span>
       </label>
       
       <input id="profile" type="file" accept="image/*" hidden>
@@ -36,7 +37,7 @@
         <label class="label">
           <span class="required">*</span>이메일
         </label>
-        <input type="email" class="input" placeholder="이메일을 입력하세요" required>
+        <input type="email"  id = "email" class="input" placeholder="이메일을 입력하세요" required>
         <div class="helper-text"></div>
       </div>
 
@@ -44,7 +45,7 @@
         <label class="label">
           <span class="required">*</span>비밀번호
         </label>
-        <input type="password" class="input" placeholder="비밀번호를 입력하세요" required>
+        <input type="password" id = "password" class="input" placeholder="비밀번호를 입력하세요" required>
         <div class="helper-text"></div>
       </div>
 
@@ -52,7 +53,7 @@
         <label class="label">
           <span class="required">*</span>비밀번호 확인
         </label>
-        <input type="password" class="input" placeholder="비밀번호를 한 번 더 입력하세요" required>
+        <input type="password" id = "checkingpassword"class="input" placeholder="비밀번호를 한 번 더 입력하세요" required>
         <div class="helper-text"></div>
       </div>
 
@@ -60,7 +61,7 @@
         <label class="label">
           <span class="required">*</span>닉네임
         </label>
-        <input type="text" class="input" placeholder="닉네임을 입력하세요" required>
+        <input type="text" id = "nickname" class="input" placeholder="닉네임을 입력하세요" required>
         <div class="helper-text"></div>
       </div>
 

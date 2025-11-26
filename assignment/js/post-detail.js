@@ -1,4 +1,4 @@
-import * as util from "../common/common.js";
+import * as util from "./common/common.js";
 
 let currentUser = null;
 let editMode = false; // 지금 수정 모드인지
@@ -300,31 +300,6 @@ function formatNumber(num) {
   return num;
 }
 
-async function loadLikeStatus(postId) {
-  const res = await fetch(
-    `http://localhost:8080/api/likes/mylike/${postId}`,
-    {}
-  );
-
-  const liked = await res.json(); // true/false
-  const likeBox = document.querySelector(".post-stats .stat-box:nth-child(1)");
-
-  if (liked) {
-    likeBox.classList.add("liked");
-  } else {
-    likeBox.classList.remove("liked");
-  }
-}
-
-// async function islike(postId){
-//   const res = await fetch(
-//     `http://localhost:8080/api/likes/mylike/${postId}`,
-//     {}
-//   );
-//   const liked = await renderComments.json();
-//   return liked
-
-// }
 
 function setupLikeBox(postId) {
   const likeBox = document.querySelector(".post-stats .stat-box:nth-child(1)");

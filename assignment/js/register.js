@@ -14,53 +14,57 @@ const passwordCheckInput = inputs[2];
 const nicknameInput = inputs[3];
 
 const profileHelper = document.querySelector(".profile-helper");
-const emailHelper = emailInput.nextElementSibling;
-const passwordHelper = passwordInput.nextElementSibling;
-const passwordCheckHelper = passwordCheckInput.nextElementSibling;
-const nicknameHelper = nicknameInput.nextElementSibling;
 
-const validateState = {
-  profile: false,
-  email: false,
-  password: false,
-  checkingpassword: false,
-  nickname: false,
-};
 
-const state = {
-  profile: { valid: false, message: "" },
+
+const State = {
+  profilePreview: {
+    valid: false,
+    message: "*프로필 사진을 추가해주세요",
+    previewUrl: "",
+  },
   email: { valid: false, message: "" },
   password: { valid: false, message: "" },
   checkingpassword: { valid: false, message: "" },
-  nickname: { valid: false, message: "" }
+  nickname: { valid: false, message: "" },
 };
 
-
-
-function setState(key, value){
-  validateState[key] = value;
+function setState(key, value) {
+  State[key] = value;
+  render();
 }
+
+
+
 let uploadedImageFile = null; // 실제 업로드된 파일
 
+
+
+
+
+
 profilePreview.addEventListener("click", (e) => {
-  if (!validateState.profile) {
+  e.stopPropagation();
+  console.log("test");
+  if (!State.profilePreview.valid){
     fileInput.click();
     return;
-  } else {
-    const ok = confirm("프로필 이미지를 삭제하시겠습니까?");
-    if (ok) {
-      e.preventDefault();
-      e.stopPropagation();
-      profilePreview.src = "";
-      profilePreview.style.display = "none";
-      plusIcon.style.display = "block";
-      profileHelper.textContent = "*프로필 사진을 추가해주세요";
-      validateState.profile = false;
-      uploadedImageFile = null;
-      fileInput.value = "";
-    }
   }
+
+  if (confirm("프로필 이미지를 삭제하시겠습니까?")) {
+    uploadedImageFile = null;
+    fileInput.value = "";
+    setState("profilePreview", {
+      valid: false,
+      message: "*프로필 사진을 추가해주세요",
+      previewUrl: "",
+    });
+    console.log("test");
+  }
+  
+
 });
+
 
 fileInput.addEventListener("change", () => {
   const file = fileInput.files[0];
@@ -70,25 +74,25 @@ fileInput.addEventListener("change", () => {
 
   const reader = new FileReader();
   reader.onload = (e) => {
-    profilePreview.src = e.target.result;
-    profilePreview.style.display = "block";
-    plusIcon.style.display = "none";
-    validateState.profile = true;
-    profileHelper.textContent = "";
+    let src = e.target.result;
+    let value = { valid: true, message: "", previewUrl: src };
+    setState("profilePreview", value)
   };
+
+  fileInput.value = "";
   reader.readAsDataURL(file);
+  
 });
 
 
 
-function bindValidate(input, key, validator) {
-  input.addEventListener("blur", () => {
-    validateState[key] = validator();
-    console.log(validateState[key]);
-    validateAll();
+
+async function bindValidate(input, key, validator) {
+  input.addEventListener("blur", async () => {
+    const value = await validator();
+    setState(key, value);
   });
 }
-
 bindValidate(emailInput, "email", validateEmail);
 bindValidate(passwordInput, "password", validatePassword);
 bindValidate(passwordCheckInput, "checkingpassword", validatePasswordCheck);
@@ -96,19 +100,17 @@ bindValidate(nicknameInput, "nickname", validateNickname);
 
 async function validateEmail() {
   const email = emailInput.value.trim();
-  emailHelper.textContent = "";
+  let text = "";
 
   if (!email) {
-    emailHelper.textContent = "*이메일을 입력해주세요.";
-    return false;
+    return { valid: false, message: "*이메일을 입력해주세요." };
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!emailRegex.test(email)) {
-    emailHelper.textContent =
-      "*올바른 이메일 주소 형식을 입력해주세요. (예: example@example.com)";
-    return false;
+    text = "*올바른 이메일 주소 형식을 입력해주세요. (예: example@example.com)";
+    return { valid: false, message: text };
   }
   try {
     const res = await fetch(
@@ -116,27 +118,24 @@ async function validateEmail() {
     );
     const data = await res.json();
     if (data) {
-      emailHelper.textContent = "*중복된 이메일 입니다.";
-      return false;
+      text = "*중복된 이메일 입니다.";
+      return { valid: false, message: text };
     }
   } catch (error) {
-    emailHelper.textContent = "네트워크 오류가 발생했습니다.";
-    return false;
+    text = "네트워크 오류가 발생했습니다.";
+    return { valid: false, message: text };
   }
 
-  return true;
+  return { valid: true, message: "" };
 }
 
-/* ============================
-   3. 비밀번호 유효성 검사
-============================ */
 function validatePassword() {
   const pw = passwordInput.value.trim();
-  passwordHelper.textContent = "";
+  let text;
 
   if (!pw) {
-    passwordHelper.textContent = "*비밀번호를 입력해주세요";
-    return false;
+    text = "*비밀번호를 입력해주세요";
+    return { valid: false, message: text };
   }
 
   // 8~20자 + 대문자 + 소문자 + 숫자 + 특수문자
@@ -144,99 +143,96 @@ function validatePassword() {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,20}$/;
 
   if (!pwRegex.test(pw)) {
-    passwordHelper.textContent =
+    text =
       "*비밀번호는 8자 이상, 20자 이하이며, 대문자/소문자/숫자/특수문자를 각각 최소 1개 포함해야 합니다.";
-    return false;
+    return { valid: false, message: text };
   }
 
-  return true;
+  return { valid: true, message: text };
 }
 
-/* ============================
-   4. 비밀번호 확인 검사
-============================ */
 function validatePasswordCheck() {
   const pw = passwordInput.value.trim();
   const pw2 = passwordCheckInput.value.trim();
 
-  passwordCheckHelper.textContent = "";
+  let text = "";
 
   if (!pw2) {
-    passwordCheckHelper.textContent = "*비밀번호를 한번 더 입력해주세요";
-    return false;
+    text = "*비밀번호를 한번 더 입력해주세요";
+    return { valid: false, message: text };
   }
 
   if (pw !== pw2) {
-    passwordCheckHelper.textContent = "*비밀번호가 다릅니다";
-    return false;
+    text = "*비밀번호가 다릅니다";
+    return { valid: false, message: text };
   }
 
-  return true;
+  return { valid: true, message: text };
 }
 
-/* ============================
-   5. 닉네임 유효성 검사
-============================ */
 async function validateNickname() {
   const nickname = nicknameInput.value.trim();
-  nicknameHelper.textContent = "";
+  let text = "";
 
   if (!nickname) {
-    nicknameHelper.textContent = "*닉네임을 입력해주세요.";
-    return false;
+    text = "*닉네임을 입력해주세요.";
+    return { valid: false, message: text };
   }
 
   if (nickname.includes(" ")) {
-    nicknameHelper.textContent = "*띄어쓰기를 없애주세요";
-    return false;
+    text = "*띄어쓰기를 없애주세요";
+    return { valid: false, message: text };
   }
 
   if (nickname.length > 10) {
-    nicknameHelper.textContent = "*닉네임은 최대 10자까지 작성 가능합니다.";
-    return false;
+    text = "*닉네임은 최대 10자까지 작성 가능합니다.";
+    return { valid: false, message: text };
   }
 
   try {
     const res = await fetch(
       `http://localhost:8080/api/user/nickname-conflict?nickname=${nickname}`
     );
-    console.log(`${nickname}`);
+
     const data = await res.json();
-    console.log(data);
 
     if (data) {
-      nicknameHelper.textContent = "*중복된 닉네임 입니다.";
-      return false;
+      text = "*중복된 닉네임 입니다.";
+      return { valid: false, message: text };
     }
   } catch {
     if (error) {
-      nicknameHelper.textContent = "네트워크 오류가 발생했습니다.";
-      return false;
+      text = "네트워크 오류가 발생했습니다.";
+      return { valid: false, message: text };
     }
   }
 
-  return true;
+  return { valid: true, message: text };
 }
 
-/* ============================
-   6. 모든 유효성 검사 후 버튼 활성화
-============================ */
-function validateAll() {
-  const ok =
-    validateState.email &&
-    validateState.password &&
-    validateState.checkingpassword &&
-    validateState.nickname &&
-    validateState.profile;
-  
+function render() {
+  Object.keys(State).forEach((key) => {
+    const { valid, message, previewUrl } = State[key];
+    const fieldInput = document.getElementById(key);
 
-  if (ok) {
-    signupBtn.disabled = false;
-    signupBtn.style.backgroundColor = "#7F6AEE";
-  } else {
-    signupBtn.disabled = true;
-    signupBtn.style.backgroundColor = "#ACA0EB";
-  }
+    if (key === "profilePreview") {
+      console.log("test");
+      const helper = document.querySelector(".profile-helper");
+
+      helper.textContent = message;
+      profilePreview.style.display = valid ? "block" : "none";
+      plusIcon.style.display = valid ? "none" : "block";
+      profilePreview.src = previewUrl;
+      return;
+    } else {
+      const helper = fieldInput.nextElementSibling;
+      helper.textContent = message || "";
+    }
+  });
+
+  const allValid = Object.values(State).every((s) => s.valid === true);
+  signupBtn.disabled = !allValid;
+  signupBtn.style.backgroundColor = allValid ? "#7F6AEE" : "#ACA0EB";
 }
 
 /* ============================
