@@ -22,6 +22,10 @@ export async function checkSession() {
     const data = await res.json();
     user = data.data;
 
+    
+
+    return user;
+
 
     
     
@@ -32,7 +36,7 @@ export async function checkSession() {
     window.location.href = "index.html";
   }
 
-  return user;
+
 
   
 }

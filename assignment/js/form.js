@@ -1,13 +1,14 @@
 import * as util from "./common/common.js";
 
 let postId = null; // 수정 모드 여부 판단용
+let Post = null;
 let currentUser = null;
+
 
 // =====================================================
 //                🔵 DOM 요소
 // =====================================================
 const imageInput = document.getElementById("image");
-const fileText = document.querySelector(".file-text");
 const titleInput = document.getElementById("title");
 const contentInput = document.getElementById("content");
 const submitBtn = document.getElementById("btn-write");
@@ -54,15 +55,17 @@ async function loadPostData(id) {
 
     const json = await res.json();
     const post = json.data.post;
+    Post = json.data.post;
 
     titleInput.value = post.title;
     contentInput.value = post.content;
 
+  
+
     // 기존 이미지가 있다면 안내 문구 출력
-    if (post.image && post.image.length > 0) {
-      fileText.textContent = `${post.image}`;
-    }
     updateSubmitButton();
+
+
   } catch (e) {
     console.error("게시글 로딩 실패:", e);
   }
@@ -90,7 +93,7 @@ submitBtn.addEventListener("click", async () => {
     const fd = new FormData();
     fd.append("image", imageFile);
 
-    const res = await fetch("http://localhost:8080/api/user/profile", {
+    const res = await fetch("http://localhost:8080/api/images/posts", {
       method: "POST",
       credentials: "include",
       body: fd,
@@ -103,6 +106,16 @@ submitBtn.addEventListener("click", async () => {
     }
 
     imageurl = data.url;
+  }
+  else{
+    if(Post){
+      imageurl = Post.image;
+
+    }
+    else{
+      imageurl = "";
+    }
+    
   }
 
   const payload = {

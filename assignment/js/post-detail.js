@@ -30,6 +30,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       handleCommentSubmit();
     }
   });
+
+  if (deleteBtn) {
+    deleteBtn.addEventListener("click", () => {
+      modal.classList.remove("hidden");
+    });
+  }
 });
 
 cancelBtn.addEventListener("click", () => {
@@ -40,9 +46,14 @@ cancelBtn.addEventListener("click", () => {
 confirmBtn.addEventListener("click", async () => {
   const params = new URLSearchParams(location.search);
   const postId = params.get("postId");
-
-  const res = await fetch(`http://localhost:8080/api/posts/${postId}`, {
+  
+  
+//게시글 삭제 api
+  const res = await fetch(
+    `http://localhost:8080/api/posts/${postId}`, 
+    {
     method: "DELETE",
+    credentials : "include"
   });
 
   modal.classList.add("hidden");
@@ -59,6 +70,10 @@ document.getElementById("btn-edit").addEventListener("click", () => {
   const params = new URLSearchParams(location.search);
   const postId = params.get("postId");
   window.location.href = `/html/form.html?postId=${postId}`;
+});
+
+document.getElementById("btn-delete").addEventListener("Click", () => {
+  console.log("test");
 });
 
 async function loadPostDetail() {
@@ -92,6 +107,7 @@ function renderPost(post) {
   document.querySelector(".post-content").textContent = post.content;
   document.querySelector(".author-name").textContent = post.author;
   document.querySelector(".post-date").textContent = post.birthtime;
+  document.querySelector(".post-views").textContent = `조회수 ${post.view}`;
 
   // ⭐ 게시글 수정/삭제 버튼 표시
   const postActions = document.querySelector(".post-actions");
@@ -270,6 +286,8 @@ async function handleCommentSubmit() {
   const params = new URLSearchParams(location.search);
   const postId = params.get("postId");
 
+  console.log(postId);
+
   /* ======================
       ✏ 수정 모드
   ======================= */
@@ -304,6 +322,11 @@ async function handleCommentSubmit() {
   /* ======================
       ➕ 등록 모드
   ======================= */
+  console.log(location.href);
+  console.log(params.get("postId"));
+  console.log(postId);
+  console.log(`http://localhost:8080/api/comments/${postId}`);
+
   const res = await fetch(`http://localhost:8080/api/comments/${postId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
