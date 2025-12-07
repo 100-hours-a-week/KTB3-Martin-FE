@@ -33,6 +33,10 @@
 
 ## 시연 연상
 
+https://github.com/user-attachments/assets/5aa31d6c-f8a9-433a-bc48-1c1114bcd5f0
+
+
+
 ---
 
 
