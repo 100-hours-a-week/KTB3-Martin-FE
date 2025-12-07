@@ -18,18 +18,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   loadPostDetail();
 
-  // 댓글 등록/수정 버튼 이벤트
-  document
-    .querySelector(".comment-submit")
-    .addEventListener("click", handleCommentSubmit);
-
-  // Enter 키로도 등록/수정
-  document.querySelector(".comment-input").addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleCommentSubmit();
-    }
-  });
 
   if (deleteBtn) {
     deleteBtn.addEventListener("click", () => {
@@ -37,6 +25,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 });
+
+document.querySelector(".comment-submit").addEventListener("click", (e) => {
+  // console.log("click");
+  handleCommentSubmit();
+});
+
+// Enter 키로도 등록/수정
+  document.querySelector(".comment-input").addEventListener("keyup", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      e.stopPropagation();
+      // console.log("enter");
+      handleCommentSubmit();
+    }
+  });
+
 
 cancelBtn.addEventListener("click", () => {
   modal.classList.add("hidden");
@@ -72,9 +76,6 @@ document.getElementById("btn-edit").addEventListener("click", () => {
   window.location.href = `/html/form.html?postId=${postId}`;
 });
 
-document.getElementById("btn-delete").addEventListener("Click", () => {
-  console.log("test");
-});
 
 async function loadPostDetail() {
   const params = new URLSearchParams(location.search);
@@ -275,6 +276,9 @@ function renderComments(comments) {
   댓글 등록/수정 API 처리
 -------------------------------- */
 async function handleCommentSubmit() {
+
+  
+
   const textarea = document.querySelector(".comment-input");
   const content = textarea.value.trim();
 
@@ -286,14 +290,13 @@ async function handleCommentSubmit() {
   const params = new URLSearchParams(location.search);
   const postId = params.get("postId");
 
-  console.log(postId);
+
 
   /* ======================
       ✏ 수정 모드
   ======================= */
   if (editMode) {
-    console.log(editCommentId);
-    console.log(content);
+    
     const res = await fetch(
       `http://localhost:8080/api/comments/${postId}/${editCommentId}`,
       {
@@ -322,11 +325,7 @@ async function handleCommentSubmit() {
   /* ======================
       ➕ 등록 모드
   ======================= */
-  console.log(location.href);
-  console.log(params.get("postId"));
-  console.log(postId);
-  console.log(`http://localhost:8080/api/comments/${postId}`);
-
+  
   const res = await fetch(`http://localhost:8080/api/comments/${postId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
